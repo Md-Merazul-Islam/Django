@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Page</title>
+    <style>
+      /* CSS styles */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f2f2f2;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      header {
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+      }
+
+      nav {
+        background-color: #444;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+      }
+
+      nav a {
+        color: #fff;
+        text-decoration: none;
+        margin: 0 10px;
+      }
+
+      section {
+        padding: 20px;
+        text-align: center;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+      }
+
+      input[type="submit"] {
+        width: auto;
+        cursor: pointer;
+      }
+
+      footer {
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Contact Us</h1>
+    </header>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="#">Contact</a>
+    </nav>
+
+    <section class="container">
+      <h2>Get in Touch</h2>
+      <form>
+        <input type="text" name="name" placeholder="Your Name" required />
+        <input type="email" name="email" placeholder="Your Email" required />
+        <textarea
+          name="message"
+          placeholder="Your Message"
+          rows="5"
+          required
+        ></textarea>
+        <input type="submit" value="Submit" />
+      </form>
+    </section>
+
+    <footer>
+      <p>&copy; 2024 Contact Page. All rights reserved.</p>
+    </footer>
+
+    <section>
+      <h1>Author : {{ author }}</h1>
+      <h1>Age : {{ age }}</h1>
+      <h1>List: {{ list }}</h1>
+
+      <!-- Conditional statement -->
+      {% if age >= 20 %}
+      <h1>You will get a driving license</h1>
+      {% elif age <= 19 and age >= 15 %}
+      <h1>You will get a cycle license</h1>
+      {% else %}
+      <h1>You will not get any licenses! Because you are a young boy</h1>
+      {% endif %}
+
+      <!-- loop-->
+      {% for i in course %}
+      <li>{{i.Name}} {{i.Roll}} {{i.Grp}}</li>
+      {% endfor %}
+
+    </section>
+
+    <section>
+
+         <h1>{{list1 | join:" "}}</h1>
+         <h1>{{ brith | date:"SHORT_DATE_FORMAT" }}</h1>
+         
+         {{brith|date:"SHORT_DATE_FORMAT" }}
+         
+         
+         <li> {{ nam | dictsort:"name" }} </li>  
+         
+         <h1>{{somoy| time:"H\h i\m"}}</h1>
+         <h1>{{somoy| timesince}}</h1>
+         <h1>{{"You can build web apps with python and Django" | truncatewords:2}}</h1>
+    </section>
+  </body>
+</html>
