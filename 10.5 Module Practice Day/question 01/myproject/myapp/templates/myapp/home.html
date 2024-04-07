@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <style>
+        /* CSS styles for the home page content */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        
+        p {
+            color: #666;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Django Template Filters : </h1>
+    <!-- Add -->
+    <h1>{{20 | add:"5"}} </h1>
+    <!-- Addslashes -->
+    <h1>{{"I'am " | addslashes}} </h1>
+    <!-- capfirsts -->
+    <h1>{{"am " | capfirst}} </h1>
+    <!-- center -->
+    <h1>{{"am " | center:"15"  }} </h1>
+    <!-- cut -->
+    <h1>{{"i am meraz " | cut:" "}} </h1>
+    <!-- Date -->
+    <h1>{{birth | date:"D d M Y"}} </h1>
+    
+    <!-- Defualt -->
+    <h1>{{"" | default:"nothing" }} </h1>
+    
+    <!-- dictsort -->
+    <h1>{{List | dictsort:"age"  }} </h1>
+    
+    <!-- divisibleby -->
+    <h1>{{List1 | divisibleby:"3"  }} </h1>
+    
+    <!-- escape -->
+    <h1>{{"hello world" |  escape }} </h1>
+    <!-- join -->
+    <h1>{{list2 |  join:" // "}} </h1>
+    <!-- length -->
+    <h1>{{list2 |  length}} </h1>
+    <!-- Make List -->
+    <h1>{{"Naveen" |   make_list }} </h1>
+    
+    <!-- Slice -->
+    <h1>{{list2 | slice:":2" }} </h1>
+
+    <h1>{{"Jai is a slug" | slugify }} </h1>
+    <h1>{{" <b>I</b> <button>love</button> <span>dogs</span>" | striptags }} </h1>
+
+    
+
+
+
+   
+</div>
+
+</body>
+</html>
