@@ -1,0 +1,21 @@
+{% extends "myapp/base.html" %}
+ {% block content %}
+
+<div class="flex flex-wrap justify-center">
+  {% for meal in meals %}
+
+  <div class="mx-auto max-w-md overflow-hidden rounded-lg bg-white shadow my-4">
+    <img
+      src="{{ meal.strMealThumb }}"
+      class="aspect-video w-full object-cover"
+      alt=""
+    />
+    <div class="p-4">
+      <h3 class="text-xl font-medium text-gray-900">{{ meal.strMeal }}</h3>
+      <p class="mt-1 text-gray-500">{{ meal.idMeal }}</p>
+    </div>
+  </div>
+
+  {% endfor %}
+</div>
+{% endblock %}
