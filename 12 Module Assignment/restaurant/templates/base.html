@@ -20,24 +20,12 @@
             <div class="hidden md:block">
               <ul class="flex items-center space-x-8">
                 <li><a href="{% url 'home' %}"  class="text-white">Home</a></li>
-                <li><a href="/meal/"class="text-white">Show Foods</a></li>
-                <li><a href="/about/" class="text-white">About</a></li>
+                <li><a href="{% url 'meal' %}"class="text-white">Show Foods</a></li>
+                <li><a href="{% url 'about' %}" class="text-white">About</a></li>
                 <li><a href="/contact/" class="text-white">Contact</a></li>
               </ul>
             </div>
-            
-            {% comment %} <div class="hidden md:block">
-              <ul class="flex items-center space-x-8">
-                <li><a href="{% url 'home' %}"  class="text-white">Home</a></li>
-                <li><a href="/meal/"class="text-white">Show Foods</a></li>
-                <li><a href="/about/" class="text-white">About</a></li>
-                <li><a href="/contact/" class="text-white">Contact</a></li>
-              </ul>
-            </div> {% endcomment %}
-
-
-
-
+           
             <div class="md:hidden">
               <button class="outline-none mobile-menu-button">
                 <svg class="w-6 h-6 text-white" x-show="!showMenu" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
