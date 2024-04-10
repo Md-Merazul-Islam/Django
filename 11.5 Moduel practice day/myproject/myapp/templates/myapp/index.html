@@ -1,21 +1,26 @@
 {% extends "myapp/base.html" %}
- {% block content %}
+{% block content %}
+<div class='mt-24 mx-auto max-w-[1280px]'>
 
-<div class="flex flex-wrap justify-center">
-  {% for meal in meals %}
-
-  <div class="mx-auto max-w-md overflow-hidden rounded-lg bg-white shadow my-4">
-    <img
-      src="{{ meal.strMealThumb }}"
-      class="aspect-video w-full object-cover"
-      alt=""
-    />
-    <div class="p-4">
-      <h3 class="text-xl font-medium text-gray-900">{{ meal.strMeal }}</h3>
-      <p class="mt-1 text-gray-500">{{ meal.idMeal }}</p>
+  <div class="flex flex-wrap justify-center">
+    {% for meal in meals %}
+  
+    <div class=" sm:w-1/2 md:w-1/3 lg:w-1/4 px-2 mb-4"> <!-- Adjust column widths for different screen sizes -->
+      <div class="mx-auto max-w-md overflow-hidden rounded-lg bg-white shadow">
+        <img
+          src="{{ meal.strMealThumb }}"
+          class="aspect-video w-full object-cover"
+          alt=""
+        />
+        <div class="p-4">
+          <h3 class="text-xl font-medium text-gray-900">{{ meal.strMeal }}</h3>
+          <p class="mt-1 text-gray-500">{{ meal.idMeal }}</p>
+        </div>
+      </div>
     </div>
+  
+    {% endfor %}
   </div>
 
-  {% endfor %}
 </div>
 {% endblock %}
