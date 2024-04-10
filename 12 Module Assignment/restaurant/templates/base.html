@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+
+
+
+    <header class="bg-gray-800 ">
+        <nav class="container mx-auto px-6 py-3 max-w-[1440px]">
+          <div class="flex items-center justify-between">
+            <div class="text-white font-bold text-xl">
+              <a href="#">B M</a>
+            </div>
+
+            <div class="hidden md:block">
+              <ul class="flex items-center space-x-8">
+                <li><a href="{% url 'home' %}"  class="text-white">Home</a></li>
+                <li><a href="/meal/"class="text-white">Show Foods</a></li>
+                <li><a href="/about/" class="text-white">About</a></li>
+                <li><a href="/contact/" class="text-white">Contact</a></li>
+              </ul>
+            </div>
+            
+            {% comment %} <div class="hidden md:block">
+              <ul class="flex items-center space-x-8">
+                <li><a href="{% url 'home' %}"  class="text-white">Home</a></li>
+                <li><a href="/meal/"class="text-white">Show Foods</a></li>
+                <li><a href="/about/" class="text-white">About</a></li>
+                <li><a href="/contact/" class="text-white">Contact</a></li>
+              </ul>
+            </div> {% endcomment %}
+
+
+
+
+            <div class="md:hidden">
+              <button class="outline-none mobile-menu-button">
+                <svg class="w-6 h-6 text-white" x-show="!showMenu" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                  <path d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="mobile-menu hidden md:hidden">
+            <ul class="mt-4 space-y-4">
+              <li><a href="{% url 'home' %}" class="block px-4 py-2 text-white bg-gray-900 rounded">Home</a></li>
+              <li><a href="/meal/" class="block px-4 py-2 text-white bg-gray-900 rounded">Show Foods</a></li>
+              <li><a href="/about/" class="block px-4 py-2 text-white bg-gray-900 rounded">About</a></li>
+              <li><a href="#" class="block px-4 py-2 text-white bg-gray-900 rounded">Contact</a></li>
+            </ul>
+          </div>
+          
+        </nav>
+      </header>
+
+
+      {%block content%}
+
+      {% endblock %}
+    
+</body>
+</html>
