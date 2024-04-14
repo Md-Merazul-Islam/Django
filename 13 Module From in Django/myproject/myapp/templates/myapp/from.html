@@ -1,0 +1,81 @@
+{% extends "base.html" %} {%block content%}
+
+<div>
+  <!-- component -->
+  <!-- This is an example component -->
+  <script defer src="https://unpkg.com/alpinejs@3.2.3/dist/cdn.min.js"></script>
+  <div
+    class="flex flex-col h-screen bg-gradient-to-b from-[#063970] to-blue-200"
+  >
+    <div
+      class="grid place-items-center mx-2 my-20 sm:my-auto"
+      x-data="{ showPass: true }"
+    >
+      <div
+        class="w-11/12 p-12 sm:w-8/12 md:w-6/12 lg:w-5/12 2xl:w-4/12 px-6 py-10 sm:px-10 sm:py-6 bg-white rounded-lg shadow-md lg:shadow-lg"
+      >
+        <div class="text-center mb-4">
+          <h6 class="font-semibold text-[#063970] text-xl">Login</h6>
+        </div>
+
+        <form class="space-y-5" method="GET" action="/myapp/about/">
+          {% csrf_token %}
+          <div>
+            <input
+              id="email"
+              type="email"
+              class="block w-full py-3 px-3 mt-2 text-gray-800 appearance-none border-2 border-gray-100 focus:text-gray-500 focus:outline-none focus:border-gray-200 rounded-md"
+              name="email"
+            />
+          </div>
+
+          <div class="relative w-full">
+            <input
+              :type="showPass ? 'password' : 'text'"
+              id="password"
+              class="block w-full py-3 px-3 mt-2 mb-4 text-gray-800 appearance-none border-2 border-gray-100 focus:text-gray-500 focus:outline-none focus:border-gray-200 rounded-md"
+              name="password"
+            />
+            <div
+              class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+            >
+              <p
+                class="font-semibold"
+                @click="showPass = !showPass"
+                x-text="showPass ? 'Show' : 'Hide'"
+              >
+                Show
+              </p>
+            </div>
+          </div>
+
+          <label
+            for="countries"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Select an option</label
+          >
+          <select
+            id="countries"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            name="select"
+          >
+            <option selected>Choose a country</option>
+            <option value="US">United States</option>
+            <option value="CA">Canada</option>
+            <option value="FR">France</option>
+            <option value="DE">Germany</option>
+          </select>
+
+          <button
+            type="submit"
+            class="w-full py-3 mt-10 bg-[#063970] rounded-md font-medium text-white uppercase focus:outline-none hover:shadow-none"
+          >
+            Login
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

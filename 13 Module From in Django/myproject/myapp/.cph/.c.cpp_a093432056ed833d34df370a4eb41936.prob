@@ -1,0 +1,1 @@
+{"name":"Local: c","url":"d:\\SDT By Django\\13 Module From in Django\\myproject\\myapp\\c.cpp","tests":[{"id":1713081348650,"input":"1\n100\n100","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\SDT By Django\\13 Module From in Django\\myproject\\myapp\\c.cpp","group":"local","local":true}
