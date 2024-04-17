@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{%block content%}
+{%load crispy_forms_tags%}
+<form action="" method="POST" class="pt-5 w-50 mx-auto">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button class="btn btn-primary mx-auto d-block px-5 py-2  fs-5" type="submit">Submit</button>
+</form>
+
+
+{%if data%}
+<h2>Form Data </h2>
+<p>Name :  {{data.name}}</p>
+<p>Email :  {{data.email}}</p>
+<p>Message :  {{data.message}}</p>
+{%endif%}
+
+{%endblock%}
