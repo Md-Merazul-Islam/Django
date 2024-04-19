@@ -1,0 +1,29 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="d-flex flex-wrap justify-content-center px-5 pt-5">
+  {%for item in data%}  
+  <div class="col-sm-3">
+    <div class="card mx-2">
+      <div class="card-body">
+        <h5 class="card-title">{{item.title}}</h5>
+        <p class="card-text">{{item.content}}</p>
+        <p>Author : {{item.author.name}}</p>
+        <br />
+        <small>
+          Catagories: 
+          {%for cata in item.category.all%}
+          <button class="btn btn-secondary btn-sm m-1 my-2" disable>
+            {{cata.name}}
+          </button>
+          {% endfor %} </small
+        ><br />
+        <div class="m-2">
+          <a href="{% url 'edit_post' item.id %}" class="btn btn-warning mx-2">Edit</a>
+          <a href="{% url 'delete_post' item.id %}" class="btn btn-danger">Delete</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
