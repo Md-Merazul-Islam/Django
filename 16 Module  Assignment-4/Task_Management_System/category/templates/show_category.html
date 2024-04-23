@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container vh-100">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <h1 class="text-center">Show Category</h1>
+      <ul class="list-group">
+
+        {% for category in categories %}
+       {% if forloop.counter0|divisibleby:2 %}
+            <li class="list-group-item text-info">{{ category.category_name }}</li>
+        {%else%}
+            <li class="list-group-item text-success">{{ category.category_name }}</li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}
