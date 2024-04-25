@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if messages %}
+    {% for message in messages %}
+    <small{% if message.tags %} class="{{ message.tags }}" style="color: white; background-color: red"{% endif %}>{{ message }}</small>
+    {% endfor %}
+{% endif %}
+
+{% load crispy_forms_tags %}
+<h1 class='text-center'>-----------------</h1>
+
+<div style="width: 50%; margin: auto;" novalidate >
+    <form method="POST">
+        {% csrf_token %}
+        {% for fm in form %}
+        <div class="form-group">
+            {{ fm.label_tag }}
+            {{ fm }} 
+            {{ fm.errors | striptags }}
+        </div>
+        {% endfor %}
+        <button class="btn btn-success">Submit</button>br
+        <small>Alredy have a account <a href="{%url 'login'%}">Login</a> </small>
+    </form>
+</div>
+{% endblock %}

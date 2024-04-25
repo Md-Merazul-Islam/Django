@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div style="width: 50%; margin: auto;" novalidate >
+    <h1>Login page ! </h1>
+    <form method="POST">
+        {% csrf_token %}
+        {%if form.non_field_errors%}
+        {% for er  in form.non_field_errors %}
+        <p class='bg-danger text-white'>  {{er}}</p>
+        {% endfor %}
+        {% endif %}
+
+        {% for fm in form %}
+        <div class="form-group">
+            {{ fm.label_tag }}
+            {{ fm }} 
+            {{ fm.errors | striptags }}
+        </div>
+        {% endfor %}
+        <button class="btn btn-success">Submit</button>
+    </form>
+</div>
+{% endblock %}
