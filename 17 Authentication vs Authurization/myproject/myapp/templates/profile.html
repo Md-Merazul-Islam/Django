@@ -6,4 +6,36 @@
 
 <small><a href="{% url 'passchange' %}">Change password</a></small><br>
 <small><a href="{% url 'passchange2' %}">Forget Password</a></small>
+
+
+
+<div style="width: 50%; margin: auto;" novalidate >
+    <h1>Information update ! </h1>
+    {% if messages %}
+    {% for message in messages %}
+    <small{% if message.tags %} class="{{ message.tags }}" style="color: white; background-color: red"{% endif %}>{{ message }}</small>
+    {% endfor %}
+{% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        {% comment %} {{ form | crispy }} {% endcomment %}
+        {%if form.non_field_errors%}
+        {% for er  in form.non_field_errors %}
+        <p class='bg-danger text-white'>  {{er}}</p>
+        {% endfor %}
+        {% endif %}
+        
+        {% for fm in form %}
+        <div class="form-group">
+            {{ fm.label_tag }}
+            {{ fm }} 
+            {{ fm.errors | striptags }}
+        </div>
+        {% endfor %}
+        <button class="btn btn-success">Submit</button>
+    </form>
+</div>
+
+
 {% endblock %}
