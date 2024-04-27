@@ -2,12 +2,14 @@
 
 {% block content %}
 {% load crispy_forms_tags %}
-<h1 class='text-center'>{{type}} page</h1>
+<h1 class='text-center'>Your Informaiton  </h1>
+
 <div style="width: 50%; margin: auto;">
     <form action="" method="POST">
         {% csrf_token %}
         {{ form | crispy }}
         <button class="btn btn-warning">Submit</button>
     </form>
+    <a href="{%url 'user_pass'%}" class='btn btn-danger m-4'>Change Password</a>
 </div>
 {% endblock %}

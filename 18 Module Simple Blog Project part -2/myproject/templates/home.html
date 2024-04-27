@@ -1,29 +1,84 @@
 {% extends "base.html" %} {% block content %}
 
-<div class="d-flex flex-wrap justify-content-center px-5 pt-5">
-  {%for item in data%}  
-  <div class="col-sm-3">
-    <div class="card mx-2">
-      <div class="card-body">
-        <h5 class="card-title">{{item.title}}</h5>
-        <p class="card-text">{{item.content}}</p>
-        <p>Author : {{item.author.name}}</p>
-        <br />
-        <small>
-          Catagories: 
-          {%for cata in item.category.all%}
-          <button class="btn btn-secondary btn-sm m-1 my-2" disable>
-            {{cata.name}}
-          </button>
-          {% endfor %} </small
-        ><br />
-        <div class="m-2">
-          <a href="{% url 'edit_post' item.id %}" class="btn btn-warning mx-2">Edit</a>
-          <a href="{% url 'delete_post' item.id %}" class="btn btn-danger">Delete</a>
-        </div>
-      </div>
+<div class="d-flex flex-wrap row vh-100 align-items-center ">
+  <div class="col-8 pt-5 d-flex justify-content-center">
+    <div class="text-center" style="width: 60%">
+      <!-- Adjust width as needed -->
+      <h1 style="font-size: 80px; font-weight: bold; color: #87c8da">
+        Welcome To Our Website
+      </h1>
+
+      <p class="text-left">
+        <!-- Use text-left for left-aligned paragraphs -->
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit ex
+        voluptatibus architecto laboriosam cumque sint, rem illum dolorum earum
+        explicabo consectetur quasi consequatur, ullam sit impedit doloremque
+        pariatur voluptates possimus.
+      </p>
     </div>
   </div>
-  {% endfor %}
+
+  <div class="col-4 pt-5 align-content-center justify-content-center">
+    {% load static %}
+    <img src="{% static 'banner.png' %}" alt="Example Image" />
+  </div>
 </div>
+<hr>
+<div class="d-flex flex-wrap row pt-5">
+  <div class="col-2 pt-5 bg-secondary vh-100 p-md-5">
+    <form method="GET">
+      <h3 class='pt-5'>All categories</h3>
+      {% for cata in categories %}
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          name="category"
+          value="{{ cata.slug }}"
+          id="{{ cata.id }}"
+        />
+        <label class="form-check-label" for="{{ cata.id }}">
+          <a
+            class="text-decoration-none text-dark"
+            href="{% url 'category_wise_view' cata.slug %}"
+            >{{ cata.name }}</a
+          >
+        </label>
+      </div>
+      {% endfor %} 
+
+  
+      
+    </form>
+  </div>
+
+  <div class="col-10 pt-5">
+    <h4>{{ data | length }} Result Found</h4>
+    <div class="d-flex flex-wrap justify-content-center px-5 pt-5">
+      {% for item in data %}
+      <div class="col-sm-3">
+        <div class="card mx-2">
+          <div class="card-body">
+            <h5 class="card-title">{{ item.title }}</h5>
+            <p class="card-text">{{ item.content }}</p>
+            <p>
+              Author: {{ item.author.first_name }} {{ item.author.last_name }}
+            </p>
+            <br />
+            <small>
+              Categories: {% for cata in item.category.all %}
+              <button class="btn btn-secondary btn-sm m-1 my-2" disabled>
+                {{ cata.name }}
+              </button>
+              {% endfor %}
+            </small>
+            <br />
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
 {% endblock %}
