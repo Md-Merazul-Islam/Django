@@ -22,11 +22,39 @@ INSTALLED_APPS = (
 )
 # add also 
 
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+    CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
-CRISPY_TEMPLATE_PACK = "bootstrap5"
+    CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 
 # Html forms 
 
-https://github.com/Md-Merazul-Islam/Django/blob/main/15.5%20Module%20Practice%20Day/musicians_directory/musician/templates/musician/musician_form.html
+    {% extends "base.html" %}
+
+    {% block content %}
+    {% load crispy_forms_tags %}
+    <h1 class='text-center'> Add profile page  page</h1>
+
+    <div style="width: 50%; margin: auto;">
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form | crispy }}
+        <button class="btn btn-warning">Submit</button>
+    </form>
+    </div>
+    {% endblock %}
+
+
+# static file : 
+
+    import os
+    
+    "crispy_forms",
+    STATIC_URL = '/static/'
+    STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+    ]
+
+    ...
+    
+
