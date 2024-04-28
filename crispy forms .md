@@ -55,6 +55,6 @@ INSTALLED_APPS = (
     os.path.join(BASE_DIR, 'static'),
     ]
 
-    ...
+  
     
 
