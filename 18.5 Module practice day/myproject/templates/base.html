@@ -6,23 +6,44 @@
   <title>Blog Project</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+  <style>
+    .max-width-container {
+      max-width: 1680px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
 </head>
 <body>
-  <nav class="navbar bg-body-tertiary justify-content-between">
-    <div class="d-flex flex-row-reverse">
-      <a class="navbar-brand mx-2">Blog Web</a>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid max-width-container">
+      <a class="navbar-brand text-success" href="#">Blog Web</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="home">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact</a>
+          </li>
+        </ul>
+        <div class="d-flex">
+          {% if request.user.is_authenticated %}
+          <a href="{% url 'profile' %}" class="btn btn-info me-2" type="submit">Profile</a>
+          <a href="{% url 'user_logout' %}" class="btn btn-primary" type="submit">Logout</a>
+          {% else %}
+          <a href="{% url 'user_signup' %}" class="btn btn-info me-2" type="submit">Register</a>
+          <a href="{% url 'user_login' %}" class="btn btn-primary" type="submit">Login</a>
+          {% endif %}
+        </div>
+      </div>
     </div>
-    {% if request.user.is_authenticated %}
-    <div>
-      <a  href="{% url 'profile' %}" class="btn btn-info mx-2" type="submit">Profile</a>
-      <a href="{% url 'user_logout' %}" class="btn btn-primary mx-2" type="submit">Logout</a>
-    </div>
-    {% else %}
-    <div>
-      <a href="{% url 'user_signup' %}" class="btn btn-info mx-2" type="submit">Register</a>
-      <a href="{% url 'user_login' %}" class="btn btn-primary mx-2" type="submit">Login</a>
-    </div>
-    {% endif %}
   </nav>
 
   {% if messages %}
@@ -30,7 +51,7 @@
     {% for message in messages %}
     <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
       <div class="toast-header">
-        <i class="fas fa-check-circle me-2 text-success"></i> <!-- Congratulations icon -->
+        <i class="fas fa-check-circle me-2 text-success"></i> 
         <strong class="me-auto">Congratulations</strong>
         <small>Now</small>
         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
@@ -43,7 +64,9 @@
   </div>
   {% endif %}
 
-  {% block content %} {% endblock content %}
+  <div class='max-width-container'>
+    {% block content %} {% endblock content %}
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <script>
