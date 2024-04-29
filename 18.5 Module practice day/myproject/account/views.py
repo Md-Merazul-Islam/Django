@@ -6,7 +6,7 @@ from django.contrib.auth.forms import AuthenticationForm,PasswordChangeForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Author
-from .forms import CustomPasswordChangeForm
+from .forms import ChangePasswordForm
 
 def home (request):
     return render (request, 'home.html')
