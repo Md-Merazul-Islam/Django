@@ -75,7 +75,7 @@ def chg_pass_without_pass(request):
             request.user.set_password(new_pass)
             request.user.save()
             messages.success(request, 'Password successfully updated!')
-            return redirect('home')  
+            return render(request, 'profile.html')
     else:
         form = CustomPasswordChangeForm()  
     return render(request, 'change_pass.html', {'form': form})
