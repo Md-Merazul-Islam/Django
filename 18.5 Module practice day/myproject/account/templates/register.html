@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+<section>
+    <h1 class="text-center">{{ type }} page</h1>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {{ form | crispy }}
+            
+                    <button class="btn btn-warning ">Submit</button>
+                
+                    {% if type == 'register' %}
+                    <small class=" ">Already have an account? <a href="{% url 'user_login' %}" class="d-inline-block">Login</a></small>
+                    {% else %}
+                    <small class="mx-2 ">Don't have an account? <a href="{% url 'user_signup' %}" class="d-inline-block">Register</a></small>
+                    
+                    {% endif %}
+            
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

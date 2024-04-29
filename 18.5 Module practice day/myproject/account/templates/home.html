@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="d-flex flex-wrap row vh-100 align-items-center ">
+  <div class="col-6 pt-5 d-flex justify-content-center">
+    <div class="text-center" style="width: 60%">
+      <!-- Adjust width as needed -->
+      <h1 style="font-size: 80px; font-weight: bold; color: #016BA2">
+        Welcome To Our Website
+      </h1>
+
+      <p class="text-left">
+        <!-- Use text-left for left-aligned paragraphs -->
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit ex
+        voluptatibus architecto laboriosam cumque sint, rem illum dolorum earum
+        explicabo consectetur quasi consequatur, ullam sit impedit doloremque
+        pariatur voluptates possimus.
+      </p>
+    </div>
+  </div>
+
+  <div class="col-6 ">
+    {% load static %}
+    <img src="{% static 'blog-banner.png' %}" alt="Example Image" />
+  </div>
+</div>
+
+
+{% endblock %}

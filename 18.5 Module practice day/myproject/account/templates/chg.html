@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div class="card text-center">
+    <div class="card-header">
+        <h2>Change Password</h2>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Do you has remember privious password?</h5>
+      <a href="{% url 'chg_pass_with_password' %}" class="btn btn-info mx-2" type="submit">YES</a>
+    <a  href="{% url 'chg_pass_without_password' %}" class="btn btn-danger mx-2" type="submit">NO</a>
+    </div>
+</div>
+
+
+{% endblock content %}
