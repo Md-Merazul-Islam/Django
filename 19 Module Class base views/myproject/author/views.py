@@ -1,3 +1,4 @@
+from django.contrib.auth.views import LogoutView
 from typing import Any
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
@@ -7,6 +8,7 @@ from django.contrib.auth import authenticate, login, update_session_auth_hash,lo
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from posts.models import Post
+from django.urls import reverse_lazy
 
 def register(request):
     if request.method == 'POST':
@@ -56,6 +58,8 @@ class UserLoginView(LoginView):
         context = super().get_context_data(**kwargs)
         context["type"] ='Login' 
         return context
+    def get_success_url(self) -> str:
+        return reverse_lazy('profile')
         
     
 
@@ -93,8 +97,7 @@ def pass_change(request):
         form = PasswordChangeForm(user=request.user)
     return render(request, 'change_password.html', {'form': form})
 
-
+@login_required
 def user_logout(request):
     logout(request)
     return redirect('home')
-    

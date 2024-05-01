@@ -7,7 +7,7 @@
     <h1>Login page ! </h1>
     <form method="POST">
         {% csrf_token %}
-        {% comment %} {{ form | crispy }} {% endcomment %}
+        <!--{{ form | crispy }}     -->    
         {%if form.non_field_errors%}
         {% for er  in form.non_field_errors %}
         <p class='bg-danger text-white'>  {{er}}</p>

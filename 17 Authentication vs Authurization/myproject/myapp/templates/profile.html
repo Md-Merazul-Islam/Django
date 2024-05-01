@@ -2,6 +2,7 @@
 
 {% block content %}
 <h1>Welcome To Profile </h1>
+{% load crispy_forms_tags %}
 
 
 <small><a href="{% url 'passchange' %}">Change password</a></small><br>
@@ -19,7 +20,8 @@
 
     <form method="POST">
         {% csrf_token %}
-        {% comment %} {{ form | crispy }} {% endcomment %}
+       <!-- {{ form|crispy }} --> 
+      
         {%if form.non_field_errors%}
         {% for er  in form.non_field_errors %}
         <p class='bg-danger text-white'>  {{er}}</p>

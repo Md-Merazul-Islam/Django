@@ -1,12 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% load crispy_forms_tags %}
 
 
 <div style="width: 50%; margin: auto;" novalidate >
     <h1>Password Change ! </h1>
     <form method="POST">
         {% csrf_token %}
+       <!-- {{ form|crispy }} --> 
         {%if form.non_field_errors%}
         {% for er  in form.non_field_errors %}
         <p class='bg-danger text-white'>  {{er}}</p>

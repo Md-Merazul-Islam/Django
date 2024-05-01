@@ -14,7 +14,7 @@
 <div style="width: 50%; margin: auto;" novalidate >
     <form method="POST">
         {% csrf_token %}
-        {% comment %} {{ form | crispy }}                   {% endcomment %}
+        <!--{{ form | crispy }}     -->            
         {% for fm in form %}
         <div class="form-group">
             {{ fm.label_tag }}
