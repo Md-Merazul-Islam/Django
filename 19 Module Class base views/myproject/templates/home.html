@@ -59,8 +59,9 @@
       <div class="col-sm-3">
         <div class="card mx-2">
           <div class="card-body">
-            <h5 class="card-title">{{ item.title }}</h5>
-            <p class="card-text">{{ item.content }}</p>
+            <img src="{{item.image.url}}" class="card-img-top" alt="...">
+            <a class="card-title text-decoration-none text-dark " href="{% url 'detail_post' item.id %}"><h5 >{{ item.title }}</h5></a>
+            <p class="card-text"> {{ item.content  |truncatewords:9 }}</p>
             <p>
               Author: {{ item.author.first_name }} {{ item.author.last_name }}
             </p>
@@ -82,3 +83,4 @@
 </div>
 
 {% endblock %}
+

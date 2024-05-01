@@ -1,0 +1,23 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="col-sm-3 mx-auto w-50 pt-5" >
+  <div class="card mx-2">
+    <div class="card-body">
+      <img src="{{post.image.url}}" class="card-img-top w-50  d-block mx-auto " alt="..." />
+      <h5 class="card-title">{{ post.title }}</h5>
+      <p class="card-text">{{ post.content  }}</p>
+      <p>Author: {{ post.author.first_name }} {{ post.author.last_name }}</p>
+      <br />
+      <small>
+        Categories: {% for cata in post.category.all %}
+        <button class="btn btn-secondary btn-sm m-1 my-2" disabled>
+          {{ cata.name }}
+        </button>
+        {% endfor %}
+      </small>
+      <br/>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
