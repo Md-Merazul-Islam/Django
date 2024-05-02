@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Home</title>
+    <link rel="stylesheet" href="{% static 'boostrap/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'boostrap/css/bootstrap.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Satisfy&display=swap" rel="stylesheet">
+    {% block corecss %}
+        <link rel="stylesheet" href="{% static 'boostrap/css/core.css' %}">
+    {% endblock corecss %}
+
+
+</head>
+<body>
+
+
+    <!-- Navbar -->
+    
+    
+    
+    
+  
+    <!-- base content-->
+    {% block content %}
+    {% endblock content %}
+       
+
+    <script src="{% static 'boostrap/js/jquery.js' %}"></script>
+    <script src="{% static 'boostrap/js/popper.js' %}"></script>
+    <script src="{% static 'boostrap/js/all.min.js' %}"></script>
+    <script src="{% static 'boostrap/js/bootstrap.js' %}"></script>
+</body>
+</html>
