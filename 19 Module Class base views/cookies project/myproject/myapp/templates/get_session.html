@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Session Data</h1>
+<ul>
+    {% for key, value in data.items %}
+        <li>{{ key }}: {{ value }}</li>
+    {% endfor %}
+</ul>
+{% endblock content %}
