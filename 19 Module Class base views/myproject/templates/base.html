@@ -22,7 +22,76 @@
 </head>
 <body>
 
-
+  <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-center" id="navbarSupportedContent">
+  
+        <ul class="navbar-nav mx-auto me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+          </li>
+  
+  {% comment %} --------------authentication check {% endcomment %}
+          {% if request.user.is_authenticated %}
+          <li class="nav-item mx-3">
+            <a
+              class="nav-link text-white"
+              href="{% url 'add_post' %}"
+              >Add Post</a
+            >
+          </li>
+          {% endif %}
+        </ul>
+  
+        <form class="d-flex " role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+  
+        <div class='d-flex'>
+          <ul class="navbar-nav">
+            {% if request.user.is_authenticated %}
+            <li class="nav-item">
+              <a class="btn btn-warning mx-4" aria-current="page" href="{% url 'profile' %}">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-warning mx-4" aria-current="page" href="{% url 'user_logout' %}">Logout</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="btn btn-warning mx-2" aria-current="page" href="{% url 'register' %}">Register</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-warning mx-2" aria-current="page" href="{% url 'user_login' %}">Login</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+  
+      </div>
+    </div>
+  </nav>
+  
+  <div class='justify-content-center d-flex align-items-center'>
+    {% for message in messages %}
+  <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      {% comment %} <img src="..." class="rounded me-2" alt="..."> {% endcomment %}
+      <strong class="me-auto">Congratulations</strong>
+      <small>Now</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      <small>{{ message }}</small>
+    </div>
+  </div>
+  {% endfor %}
+  </div>
+  
   
 
   {% block content %}{% endblock content %}
