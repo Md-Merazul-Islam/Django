@@ -226,6 +226,250 @@ INSTALLED_APPS = (
 
 
 
+# BASE HTML CODE 
+            
+            <!DOCTYPE html>
+            {% load static %}
+            <html lang="en">
+              <head>
+                <meta charset="utf-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <title>Bootstrap demo</title>
+            
+                <link
+                  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+                  rel="stylesheet"
+                  integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+                  crossorigin="anonymous"
+                />
+            
+                <link rel="stylesheet" href="{% static 'boostrap/css/all.min.css' %}" />
+                <link rel="stylesheet" href="{% static 'boostrap/css/bootstrap.css' %}" />
+                <link
+                  href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Satisfy&display=swap"
+                  rel="stylesheet"
+                />
+                {% block corecss %}
+                <link rel="stylesheet" href="{% static 'boostrap/css/style.css' %}" />
+                {% endblock corecss %}
+            
+                <style>
+                  .mx-container {
+                    width: 100%;
+                    max-width: 1680px;
+                    margin: 0 auto;
+                  }
+            
+                  @media (max-width: 768px) {
+                    .mx-container {
+                      max-width: 90%;
+                    }
+                  }
+                </style>
+              </head>
+              <body>
+                <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+                  <div class="mx-container container-fluid">
+                    <a class="navbar-brand" href="#">MVTV</a>
+                    <button
+                      class="navbar-toggler"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#navbarSupportedContent"
+                      aria-controls="navbarSupportedContent"
+                      aria-expanded="false"
+                      aria-label="Toggle navigation"
+                    >
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div
+                      class="collapse navbar-collapse justify-center"
+                      id="navbarSupportedContent"
+                    >
+                      <ul class="navbar-nav mx-auto me-auto mb-2 mb-lg-0">
+                        {% comment %} --------------authentication check {% endcomment %} {%
+                        if request.user.is_authenticated %}
+                        <li class="nav-item">
+                          <a
+                            class="nav-link active"
+                            aria-current="page"
+                            href="{% url 'home' %}"
+                            >Home</a
+                          >
+                        </li>
+            
+                        <li class="nav-item">
+                          <a
+                            class="nav-link active"
+                            aria-current="page"
+                            href="{% url 'musician_list' %}"
+                            >Musicina
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a
+                            class="nav-link active"
+                            aria-current="page"
+                            href="{% url 'album_list' %}"
+                            >Album
+                          </a>
+                        </li>
+            
+                        <li class="nav-item dropdown">
+                          <a
+                            class="nav-link dropdown-toggle"
+                            href="#"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                          >
+                            Create
+                          </a>
+                          <ul class="dropdown-menu">
+                            <li>
+                              <a class="dropdown-item" href="{% url 'musician_create' %}"
+                                >Create Musician
+                              </a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="{% url 'album_create' %}"
+                                >Create Album
+                              </a>
+                            </li>
+                          </ul>
+                        </li>
+            
+                        {% endif %}
+                      </ul>
+            
+                      <form class="d-flex" role="search">
+                        <input
+                          class="form-control me-2"
+                          type="search"
+                          placeholder="Search"
+                          aria-label="Search"
+                        />
+                        <button class="btn btn-outline-success" type="submit">
+                          Search
+                        </button>
+                      </form>
+            
+                      <div class="d-flex">
+                        <ul class="navbar-nav">
+                          {% if request.user.is_authenticated %}
+                          <li class="nav-item">
+                            {% comment %}
+                            <a
+                              class="btn btn-warning mx-4"
+                              aria-current="page"
+                              href="{% url 'profile' %}"
+                              >Profile</a
+                            >
+                            {% endcomment %}
+                          </li>
+                          <li class="nav-item">
+                            <a
+                              class="btn btn-warning mx-4"
+                              aria-current="page"
+                              href="{% url 'user_logout' %}"
+                              >Logout</a
+                            >
+                          </li>
+                          {% else %}
+                          <li class="nav-item">
+                            <a
+                              class="btn btn-warning mx-2"
+                              aria-current="page"
+                              href="{% url 'register' %}"
+                              >Register</a
+                            >
+                          </li>
+                          <li class="nav-item">
+                            <a
+                              class="btn btn-warning mx-2"
+                              aria-current="page"
+                              href="{% url 'user_login' %}"
+                              >Login</a
+                            >
+                          </li>
+                          {% endif %}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </nav>
+            
+                <div class="justify-content-center d-flex align-items-center">
+                  {% for message in messages %}
+                  <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                      <img src="..." class="rounded me-2" alt="..." /> {% endcomment %}
+                      <strong class="me-auto">Congratulations</strong>
+                      <small>Now</small>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="toast"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="toast-body">
+                      <small>{{ message }}</small>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+            
+                <div class="mx-container">{% block content %}{% endblock content %}</div>
+            
+                <script src="{% static 'boostrap/js/jquery.js' %}"></script>
+                <script src="{% static 'boostrap/js/popper.js' %}"></script>
+                <script src="{% static 'boostrap/js/all.min.js' %}"></script>
+                <script src="{% static 'boostrap/js/bootstrap.js' %}"></script>
+            
+                <script
+                  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                  integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                  crossorigin="anonymous"
+                ></script>
+                <script>
+                  // Initialize Bootstrap toast
+                  var toastElList = [].slice.call(document.querySelectorAll(".toast"));
+                  var toastList = toastElList.map(function (toastEl) {
+                    return new bootstrap.Toast(toastEl);
+                  });
+            
+                  // Show all toasts
+                  toastList.forEach(function (toast) {
+                    toast.show();
+                  });
+                </script>
+              </body>
+            </html>
 
+
+
+# A RESPONSIVE PAGE HTML CODE :
+
+            {% extends "base.html" %} 
+            {% block content %}
+            <div class="d-flex flex-wrap row vh-100 align-items-center ">
+              <div class="col-lg-8 col-md-12 pt-5 d-flex justify-content-center">
+                <div class="text-center" style="width: 80%">
+                  <h1 style="font-size: 80px; font-weight: bold; color: #D44DA9">
+                    Welcome To Our Website
+                  </h1>
+                  <p class="text-left" style="color: #0D3858;">
+                    Michael Walker is leading a revolution in today’s music industry. Having personally reached 17 million views on YouTube, working with Grammy Award-winning producers and touring internationally to perform for hundreds of thousands of fans worldwide - Michael is one of those rare mentors who has actually walked the walk of their own methodology.
+                  </p>
+                </div>
+              </div>
+            
+              <div class="col-lg-4 col-md-12 pt-5 align-content-center justify-content-center">
+                {% load static %}
+                <img class="w-100" src="{% static 'banner.png' %}" alt="Example Image" />
+              </div>
+            </div>
+            {% endblock %}
 
             
