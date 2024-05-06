@@ -59,7 +59,7 @@
       <div class="col-sm-3">
         <div class="card mx-2">
           <div class="card-body">
-            <img src="{{item.image.url}}" class="card-img-top" alt="...">
+            {% comment %} <img src="{{item.image.url}}" class="card-img-top" alt="..."> {% endcomment %}
             <a class="card-title text-decoration-none text-dark " href="{% url 'detail_post' item.id %}"><h5 >{{ item.title }}</h5></a>
             <p class="card-text"> {{ item.content  |truncatewords:9 }}</p>
             <p>

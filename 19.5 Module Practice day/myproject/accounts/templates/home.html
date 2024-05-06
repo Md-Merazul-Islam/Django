@@ -1,0 +1,20 @@
+{% extends "base.html" %} 
+{% block content %}
+<div class="d-flex flex-wrap row vh-100 align-items-center ">
+  <div class="col-lg-8 col-md-12 pt-5 d-flex justify-content-center">
+    <div class="text-center" style="width: 80%">
+      <h1 style="font-size: 80px; font-weight: bold; color: #D44DA9">
+        Welcome To Our Website
+      </h1>
+      <p class="text-left" style="color: #0D3858;">
+        Michael Walker is leading a revolution in today’s music industry. Having personally reached 17 million views on YouTube, working with Grammy Award-winning producers and touring internationally to perform for hundreds of thousands of fans worldwide - Michael is one of those rare mentors who has actually walked the walk of their own methodology.
+      </p>
+    </div>
+  </div>
+
+  <div class="col-lg-4 col-md-12 pt-5 align-content-center justify-content-center">
+    {% load static %}
+    <img class="w-100" src="{% static 'banner.png' %}" alt="Example Image" />
+  </div>
+</div>
+{% endblock %}

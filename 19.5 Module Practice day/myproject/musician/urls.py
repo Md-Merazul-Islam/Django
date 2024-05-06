@@ -1,10 +1,9 @@
 from django.urls import path
-from .views import *
+from . import views
 
 urlpatterns = [
-    path('create/',MusicianCreateView.as_view(),name='musician_create'),
-    path('update/<int:pk>',MusicianUpdateView.as_view(),name='musician_update'),
-    path('delete/<int:pk>',MusicianDeleteView.as_view(),name='musician_delete'),
-    path('musician-details/<int:pk>',MusicianDetailView.as_view(),name='musician_detail'),
-    
+    path('', views.MusicianListViews.as_view(), name='musician_list'),
+    path('create/', views.MusicianCreateView.as_view(), name='musician_create'),
+    path('edit/<int:pk>/', views.MusicianUpdateViews.as_view(), name='musician_edit'),
+    path('delete/<int:pk>/', views.MusicianDeleteView.as_view(), name='musician_delete'),
 ]

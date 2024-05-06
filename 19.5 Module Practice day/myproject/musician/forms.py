@@ -5,7 +5,4 @@ class MusicianForm(forms.ModelForm):
     
     class Meta:
         model = Musician
-        fields = ['first_name','last_name','email','phone_number']
-        
-
-
+        fields = '__all__'

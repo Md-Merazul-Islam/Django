@@ -18,11 +18,11 @@
             {% for musician in musicians %}
             <tr>
                 <td>{{ musician.id }}</td>
-                <td><a href="{% url 'musician_update' musician.id %}">{{ musician.first_name }} {{ musician.last_name }}</a></td>
+                <td><a href="{% url 'musician_edit' musician.id %}">{{ musician.first_name }} {{ musician.last_name }}</a></td>
                 <td>{{ musician.email }}</td>
                 <td>{{ musician.instrument_type }}</td>
                 <td>
-                    <a class="btn btn-warning" href="{% url 'musician_update' musician.id %}">Edit</a>
+                    <a class="btn btn-warning" href="{% url 'musician_edit' musician.id %}">Edit</a>
                     <a class="btn btn-danger" href="{% url 'musician_delete' musician.id %}">Delete</a>
                 </td>
             </tr>
