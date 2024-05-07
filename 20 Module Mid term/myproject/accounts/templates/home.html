@@ -1,0 +1,19 @@
+{% extends "base.html" %} 
+{% block content %}
+<div class="d-flex flex-wrap row vh-100 align-items-center ">
+  <div class="col-lg-6 col-md-12 pt-5 d-flex justify-content-center">
+    <div class="text-center" style="width: 80%">
+      <h1 style="font-size: 80px; font-weight: bold; color: #F64F11">
+        Welcome To Our Car World
+      </h1>
+      <p class="text-left" style="color: #0D3858;">
+        Welcome to Car World, where we believe that everyone deserves a chance to get behind the wheel of a car they love. Since 2004, we've been serving Arkansas with some of the best car financing options around, but we're not just about numbers and credit scores - we see good people!</p>
+    </div>
+  </div>
+
+  <div class="col-lg-6 col-md-12 pt-5 align-content-center justify-content-center mx-auto">
+    {% load static %}
+    <img class="me-1" style="width: 900px;" src="{% static 'image1.png' %}" alt="Example Image" />
+  </div>
+</div>
+{% endblock %}
