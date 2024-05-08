@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <section>
+    <h4 class="p-4">Browse By Category</h4>
+    <style>
+      .mx-container {
+        width: 100%;
+        max-width: 1680px;
+        margin: 0 auto;
+      }
+      
+      @media (max-width: 768px) {
+        .mx-container {
+          max-width: 90%;
+        }
+      }
+      
+      .mb-custom {
+        margin-bottom: 2rem;
+      }
+      
+      .box {
+        text-align: center;
+        border: 1px solid #ccc;
+        transition: box-shadow 0.3s ease;
+        border-radius: 5px;
+        height: 50px;
+        width: 150px;
+        padding: 0.25rem;
+      }
+      
+      .box:hover {
+        cursor: pointer;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      }
+      .bx {
+        padding-top: 8px;
+      }
+    </style>
+
+    <div class="container mx-container pt-2 pb-1">
+      <div class="d-flex flex-wrap justify-content-center">
+        {% for brand in brands %}
+          <div class="m-2">
+            <div class="box text-center">
+              <h5 class="bx">{{ brand.name }}</h5>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <hr />
+
+
+  <section>
+    <h3>Car list</h3>
+    {% for car in cars %}
+    <div class="card" style="width: 18rem;">
+        <img src="{{ car.image }}" class="card-img-top" alt="..." />
+        <div class="card-body">
+            <h5 class="card-title">{{ car.name }}</h5>
+            <p class="card-text">{{ car.description|truncatewords:10 }}</p> <!-- Limit to 100 characters -->
+            <p class="card-text">Available: {{ car.quantity }}</p>
+            <p class="card-text">Price: ${{ car.price }}</p>
+            <p class="card-text">{{ car.brand }}</p>
+            <a href="#" class="btn btn-primary">Add Card</a>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+
+{% endblock %}

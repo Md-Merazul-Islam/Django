@@ -16,4 +16,67 @@
     <img class="me-1" style="width: 900px;" src="{% static 'image1.png' %}" alt="Example Image" />
   </div>
 </div>
+
+
+
+<!-- .........brand name.................  -->  
+
+<section >
+  <h5 class="p-4">Browse By Category</h5>
+  <style>
+    .mx-container {
+      width: 100%;
+      max-width: 1680px;
+      margin: 0 auto;
+    }
+    
+    @media (max-width: 768px) {
+      .mx-container {
+        max-width: 90%;
+      }
+    }
+    
+    .mb-custom {
+      margin-bottom: 2rem;
+    }
+    
+    .box {
+      text-align: center;
+      border: 1px solid #ccc;
+      transition: box-shadow 0.3s ease;
+      border-radius: 5px;
+      height: 50px;
+      width: 150px;
+      padding: 0.25rem;
+    }
+    
+    .box:hover {
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+    .bx {
+      padding-top: 8px;
+    }
+  </style>
+
+  <div class="container mx-container bg-body-secondary pt-2 pb-1">
+    <div class="d-flex flex-wrap justify-content-center">
+      {% for brand in brands %}
+        <div class="m-2">
+          <div class="box text-center">
+            <h5 class="bx">{{ brand.name }}</h5>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- .........Car list.................  -->  
+
+
+
+
+
+
 {% endblock %}

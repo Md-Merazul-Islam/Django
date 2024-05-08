@@ -7,6 +7,9 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import RedirectView
 from .forms import CustomUserCreationForm
+
+from django.shortcuts import render
+from cars.models import Car, Brand
 # Create your views here.
 
 
@@ -53,5 +56,6 @@ class LogoutView(LoginRequiredMixin, RedirectView):
         return super().get(request, *args, **kwargs)
 
 
-class HomeView(TemplateView):
-    template_name = 'home.html'
+def home(request):
+    brands = Brand.objects.all()
+    return render(request,'home.html',{'brands':brands})
