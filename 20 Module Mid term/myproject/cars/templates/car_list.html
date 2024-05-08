@@ -45,7 +45,7 @@
         {% for brand in brands %}
           <div class="m-2">
             <div class="box text-center">
-              <h5 class="bx">{{ brand.name }}</h5>
+              <a href="{% url 'brand_list_detail' brand_slug=brand.slug %}" class="text-decoration-none text-dark"><h5 class="bx">{{ brand.name }}</h5></a>
             </div>
           </div>
         {% endfor %}
@@ -55,22 +55,29 @@
 
   <hr />
 
+ 
 
   <section>
-    <h3>Car list</h3>
-    {% for car in cars %}
-    <div class="card" style="width: 18rem;">
-        <img src="{{ car.image }}" class="card-img-top" alt="..." />
-        <div class="card-body">
+    <h3 class="p-4">Car list</h3>
+
+    <div class="d-flex flex-wrap justify-content-center">
+      {% for car in cars %}
+        <div class="card m-3 shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
+          {% if car.image %}
+            <img src="{{ car.image.url }}" alt="{{ car.name }}" />
+          {% else %}
+            <img src="{% static 'placeholder_image.jpg' %}" alt="Placeholder Image" />
+          {% endif %}
+          <div class="card-body">
             <h5 class="card-title">{{ car.name }}</h5>
-            <p class="card-text">{{ car.description|truncatewords:10 }}</p> <!-- Limit to 100 characters -->
+            <p class="card-text">{{ car.description|truncatewords:10 }}</p>
             <p class="card-text">Available: {{ car.quantity }}</p>
             <p class="card-text">Price: ${{ car.price }}</p>
-            <p class="card-text">{{ car.brand }}</p>
+            <p class="card-text bg-secondary rounded-4 w-50 text-center">{{ car.brand.name }}</p>
             <a href="#" class="btn btn-primary">Add Card</a>
+          </div>
         </div>
+      {% endfor %}
     </div>
-    {% endfor %}
-</section>
-
+  </section>
 {% endblock %}

@@ -47,7 +47,14 @@ class CarListView(ListView):
 
 
 
-def brand_list(request):
+def car_list_by_brand(request, brand_slug=None):
     brands = Brand.objects.all()
     cars = Car.objects.all()
-    return render(request, 'car_list.html', {'brands': brands, 'cars':cars})
+
+    if brand_slug is not None:
+        brand = get_object_or_404(Brand, slug=brand_slug)
+        cars = cars.objects.filter(brand=brand)
+    
+    return render(request, 'car_list.html', {'brands': brands, 'cars': cars})
+
+

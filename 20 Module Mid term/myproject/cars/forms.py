@@ -9,7 +9,7 @@ class CarForm(forms.ModelForm):
             # 'brand': forms.TextInput(attrs={'placeholder': 'Enter brand name'}),
             'name': forms.TextInput(attrs={'placeholder': 'Enter car name'}),
             'description': forms.Textarea(attrs={'placeholder': 'Enter description'}),
-            'image': forms.ClearableFileInput(attrs={'placeholder': 'Upload image'}),
+            # 'image': forms.ClearableFileInput(attrs={'placeholder': 'Upload image'}),
             'quantity': forms.NumberInput(attrs={'placeholder': 'Enter quantity'}),
             'price': forms.NumberInput(attrs={'placeholder': 'Enter price'}),
         }
