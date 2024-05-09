@@ -55,7 +55,34 @@ INSTALLED_APPS = (
         os.path.join(BASE_DIR, 'static'),
         ]
     
+
+# [Media file](https://djangocentral.com/managing-media-files-in-django/)
+
+  Open settings.py file of your project and add the following configuration.
+
+        # Base url to serve media files
+        MEDIA_URL = '/media/'
+        
+        # Path where media is stored'
+        MEDIA_ROOT = BASE_DIR / 'media'
+
+* url.py 
+
+      from django.conf import settings
+      from django.conf.urls.static import static
       
+      urlpatterns = [
+          path('admin/', admin.site.urls),
+          ...]
+      if settings.DEBUG:
+  
+          urlpatterns += static(settings.MEDIA_URL,
+                                document_root=settings.MEDIA_ROOT)
+
+  * [ImageField – Django Models](https://www.geeksforgeeks.org/imagefield-django-models/)
+
+        pip install Pillow 
+
         
 
 # REGISTER.html
