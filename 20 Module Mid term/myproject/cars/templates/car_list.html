@@ -99,7 +99,10 @@
             <p class="card-text">Price: ${{ car.price }}</p>
             <p class="card-text bg-secondary rounded-4 w-50 text-center">{{ car.brand.name }}</p>
             {% if request.user.is_authenticated %}
-            <a href="#" class="btn btn-primary">Add Card</a>
+            <form method="post" action="{% url 'purchase_car' car.id %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-primary">Buy Now</button>
+            </form>
             {% endif %}
           </div>
         </div>

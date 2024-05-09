@@ -1,14 +1,13 @@
 from typing import Any
 from django.shortcuts import render, redirect, get_object_or_404
-from cars import models
-from cars.models import Car
-from cars import forms
-from cars.models import Brand
+from cars import models ,forms
+from cars.models import Car ,Purchase,Brand 
 from django.views.generic import DetailView
 from cars.forms import CommentForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-
+from django.contrib.auth.decorators import login_required
+from cars.models import Purchase
 from django.views.generic import DetailView
 
 
@@ -49,3 +48,26 @@ class DetailPostView(DetailView):
         context['comments'] = comments
         context['comment_form'] = comment_form
         return context
+
+
+@login_required
+def purchased_cars(request,car_id):
+    car = get_object_or_404(Car, pk=car_id) 
+    if request.method =='POST':
+        purchase = Purchase(user =request.user,car=car)
+        purchase.save()
+        car.quantity -=1
+        car.save()
+        return redirect('car_detail', id=car_id)  
+    return redirect('car_detail', id=car_id)
+
+
+@login_required
+def purchase_list(request):
+    purchases = Purchase.objects.all()
+    return render(request, 'purchase_list.html', {'purchases': purchases})
+
+
+@login_required
+def profile_view(request):
+    return render(request,'profile.html')

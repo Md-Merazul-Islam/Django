@@ -83,14 +83,23 @@
             <img src="{% static 'placeholder_image.jpg' %}" alt="Placeholder Image" />
           {% endif %}
           <div class="card-body">
-            <a href="{%url 'car_detail' car.id%}" class="text-decoration-none text-dark"><h5 class="card-title">{{ car.name }}</h5></a>
+            <a href="{% url 'car_detail' car.id %}" class="text-decoration-none text-dark"><h5 class="card-title">{{ car.name }}</h5></a>
             <p class="card-text">{{ car.description|truncatechars:50 }}</p>
             <p class="card-text">Available: {{ car.quantity }}</p>
             <p class="card-text">Price: ${{ car.price }}</p>
-            <p class="card-text bg-secondary rounded-4 w-50 text-center">{{ car.brand.name }}</p>
+            <div>
+              <ul class="text-start">
+                {% for category in car.category.all %}
+                  <span class="card-text bg-secondary-subtle rounded-2 m-1 w-50 ">{{ category.name }}</span>
+                {% endfor %}
+              </ul>
+            </div>
             {% if request.user.is_authenticated %}
-              <a href="#" class="btn btn-primary">Add Card</a>
-            {% endif %}
+            <form method="post" action="{% url 'purchase_car' car.id %}">
+
+              {% csrf_token %}
+              <button type="submit" class="btn btn-primary">Buy Now</button>
+            </form>   {% endif %}
           </div>
         </div>
       {% endfor %}

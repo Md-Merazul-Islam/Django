@@ -15,23 +15,28 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, include
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/',include('accounts.urls')),
-    path('cars/',include('cars.urls')),
-    path('brand/',include('brand.urls')),
-    path('',views.home,name='home'),
-    path('category/<slug:category_slug>/',views.home,name='category_wise_view'),
-    path('details/<int:id>',views.DetailPostView.as_view(), name = 'car_detail'),
+    path('accounts/', include('accounts.urls')),
+    path('cars/', include('cars.urls')),
+    path('brand/', include('brand.urls')),
+    path('', views.home, name='home'),
+    path('category/<slug:category_slug>/',
+         views.home, name='category_wise_view'),
+    path('details/<int:id>', views.DetailPostView.as_view(), name='car_detail'),
+    path('purchase/<int:car_id>/', views.purchased_cars, name='purchase_car'),
+    path('purchases-list/', views.purchase_list, name='purchase_list'),
+    path('profile/', views.profile_view, name='profile_views'),
+    
 
 
 
 ]
 
 urlpatterns += static(settings.MEDIA_URL,
-                          document_root=settings.MEDIA_ROOT)
+                      document_root=settings.MEDIA_ROOT)

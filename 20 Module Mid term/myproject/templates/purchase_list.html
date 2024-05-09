@@ -1,0 +1,27 @@
+
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="pt-5">
+    <table class="table ">
+        <thead>
+          <tr class="bg-body-secondary">
+            <th scope="col" class="text-center">Serial</th>
+            <th scope="col" class="text-center">User</th>
+            <th scope="col" class="text-center">Car</th>
+            <th scope="col" class="text-center">Purchase Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for purchase in purchases %}
+            <tr>
+              <th scope="row" class="text-center">{{forloop.counter}}</th>
+              <td class="text-center">{{ purchase.user.username }}</td>
+              <td class="text-center">{{ purchase.car.name }}</td>
+              <td class="text-center">{{ purchase.purchase_date }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+</div>
+{% endblock %}
