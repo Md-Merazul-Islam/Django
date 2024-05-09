@@ -8,6 +8,9 @@ from django.views.generic import ListView, CreateView
 from .models import Car
 from brand.models import Brand
 from django.contrib.messages.views import SuccessMessageMixin
+from . import forms, models
+from .models import Car, Comment
+from .forms import CommentForm
 
 # add car
 class AddCarView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
@@ -42,3 +45,4 @@ def car_list_by_brand(request, category_slug=None):
     categories = Brand.objects.all()
 
     return render(request, 'home.html', {'data': data, 'categories': categories})
+

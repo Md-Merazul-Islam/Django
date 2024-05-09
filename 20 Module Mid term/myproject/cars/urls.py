@@ -7,5 +7,4 @@ urlpatterns = [
     path('',views.car_list_by_brand,name='car_list'),
     path('category/<slug:category_slug>/',views.car_list_by_brand,name='category_wise_view'),
 
-
 ]
