@@ -1,5 +1,5 @@
-
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
+from django.contrib.auth import authenticate, login, update_session_auth_hash,logout
 from django.views.generic import FormView, TemplateView
 from django.urls import reverse_lazy
 from django.contrib.auth import login, logout
@@ -7,9 +7,10 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import RedirectView
 from .forms import CustomUserCreationForm
-
-from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render ,redirect
 from cars.models import Car, Brand
+from . import forms
 # Create your views here.
 
 
@@ -57,3 +58,31 @@ class LogoutView(LoginRequiredMixin, RedirectView):
 
 
 
+@login_required
+def edit_profile(request):
+    if request.method =='POST':
+        profile_form = forms.ChangeUserData(request.POST, instance=request.user)
+        if profile_form.is_valid():
+            profile_form.save()
+            messages.success(request,'Profile information updated successfully.')
+            return redirect ('register')
+    else:
+        profile_form = forms.ChangeUserData(instance=request.user)
+    return render(request,'update_profile.html',{'form':profile_form})
+
+
+
+@login_required
+def pass_change(request):
+    if request.method =='POST':
+        form = PasswordChangeForm(request.user,data =request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(
+                request, 'Your password has been changed successfully.')
+            update_session_auth_hash(request,form.user)
+            return redirect('profile_views')
+    else:
+        form = PasswordChangeForm(user=request.user)
+    return render(request,'change_password.html',{'form':form})
+            
