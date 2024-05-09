@@ -25,53 +25,6 @@ def home(request, category_slug=None):
     return render(request, 'home.html', {'data': data, 'categories': categories})
 
 
-# def car_details_view(request, car_id):
-#     car = get_object_or_404(Car, id = car_id)
-#     return render(request,'car_details.html',{'car':car})
-
-
-# class DetailPostView(DetailView):
-#     model = models.Car
-#     form_class = forms.CarForm
-#     pk_url_kwarg = 'id'
-#     template_name = 'car_details.html'
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         post = self.object
-#         comments = post.comments.all()
-
-#         if self.request.method == 'POST':
-#             comment_form = forms.CommentForm(data=self.request.POST)
-#             if comment_form.is_valid():
-#                 new_comment = comment_form.save(commit=False)
-#                 new_comment.post = post
-#                 new_comment.save()
-#         else:
-#             comment_form = forms.CommentForm()
-
-#         context['comments'] = comments
-#         context['comment_form'] = comment_form
-#         return context
-
-# views.py
-
-
-def car_detail(request, car_id):
-    car = get_object_or_404(Car, pk=car_id)
-    comments = car.comments.all()
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.car = car
-            comment.save()
-            return redirect('car_detail', car_id=car_id)
-    else:
-        form = CommentForm()
-    return render(request, 'car_detail.html', {'car': car, 'comments': comments, 'form': form})
-
-
 class DetailPostView(DetailView):
     model = models.Car
     form_class = forms.CarForm

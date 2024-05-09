@@ -27,9 +27,8 @@ urlpatterns = [
     path('brand/',include('brand.urls')),
     path('',views.home,name='home'),
     path('category/<slug:category_slug>/',views.home,name='category_wise_view'),
-    # path('car/<int:car_id>/', views.car_details_view,name='car_detail'),
     path('details/<int:id>',views.DetailPostView.as_view(), name = 'car_detail'),
-    #  path('car/<int:car_id>/', views.car_detail, name='car_detail'),
+
 
 
 ]
