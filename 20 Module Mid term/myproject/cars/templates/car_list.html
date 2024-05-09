@@ -45,7 +45,8 @@
         {% for brand in brands %}
           <div class="m-2">
             <div class="box text-center">
-              <a href="{% url 'brand_list_detail' brand_slug=brand.slug %}" class="text-decoration-none text-dark"><h5 class="bx">{{ brand.name }}</h5></a>
+              <a href="/?brand={{brand.id}}" class="text-decoration-none text-dark"><h5 class="bx">{{ brand.name }}</h5></a>
+              {% comment %} <a href="{% url 'brand_list_detail' brand_slug=brand.slug %}" class="text-decoration-none text-dark"><h5 class="bx">{{ brand.name }}</h5></a> {% endcomment %}
             </div>
           </div>
         {% endfor %}

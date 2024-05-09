@@ -1,14 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
-class Brand(models.Model):
-    name = models.CharField(max_length=10)
-    slug = models.SlugField(max_length=100, unique=True , null=True, blank=True)
-
-    def __str__(self):
-        return self.name
-
-
+from brand.models import Brand
 
 
 class Car (models.Model):
@@ -22,6 +14,17 @@ class Car (models.Model):
 
     def __str__(self):
         return self.name
+
+    @staticmethod
+    def get_all_cars():
+        return Car.objects.all()
+    
+    @staticmethod
+    def get_all_cars_by_id(brand_id):
+        if brand_id:
+            return Car.objects.filter(brand=brand_id)
+        else:
+            return Car.objects.all()
 
 
 class Order(models.Model):
