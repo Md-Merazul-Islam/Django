@@ -4,7 +4,7 @@ from brand.models import Brand
 
 
 class Car (models.Model):
-    brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
+    category = models.ManyToManyField(Brand)
     name = models.CharField(max_length=100)
     description = models.TextField()
     image = models.ImageField(
@@ -15,16 +15,6 @@ class Car (models.Model):
     def __str__(self):
         return self.name
 
-    @staticmethod
-    def get_all_cars():
-        return Car.objects.all()
-    
-    @staticmethod
-    def get_all_cars_by_id(brand_id):
-        if brand_id:
-            return Car.objects.filter(brand=brand_id)
-        else:
-            return Car.objects.all()
 
 
 class Order(models.Model):

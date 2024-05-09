@@ -32,28 +32,13 @@ class CarListView(ListView):
 
 
 
-# def car_list_by_brand(request, brand_slug=None):
-#     brands = Brand.objects.all()
-#     cars = Car.objects.all()
+def car_list_by_brand(request, category_slug=None):
+    data = Car.objects.all()
 
-#     if brand_slug is not None:
-#         brand = get_object_or_404(Brand, slug=brand_slug)
-#         cars = cars.objects.filter(brand=brand)
-    
-#     return render(request, 'car_list.html', {'brands': brands, 'cars': cars})
+    if category_slug is not None:
+        # category = get_object_or_404(Brand, slug=category_slug)
+        category = Brand.objects.get(slug=category_slug) # kon object er part ta ber kore niye aslo
+        data = Car.objects.filter(category=category )
+    categories = Brand.objects.all()
 
-
-def car_list_by_brand(request):
-    cars = None
-    brands = Brand.objects.all()
-    brand_id = request.GET.get('brand')  
-    if brand_id:
-        cars = Car.get_all_cars_by_id(brand_id)
-    else:
-        cars = Car.get_all_cars()
-    data = {
-        'cars': cars,
-        'brands': brands
-    }
-    return render(request, 'car_list.html', data)
-
+    return render(request, 'home.html', {'data': data, 'categories': categories})

@@ -56,6 +56,4 @@ class LogoutView(LoginRequiredMixin, RedirectView):
         return super().get(request, *args, **kwargs)
 
 
-def home(request):
-    brands = Brand.objects.all()
-    return render(request,'home.html',{'brands':brands})
+

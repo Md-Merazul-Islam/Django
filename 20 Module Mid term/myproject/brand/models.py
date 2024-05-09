@@ -7,7 +7,5 @@ class Brand(models.Model):
 
     def __str__(self):
         return self.name
-    @staticmethod
-    def get_all_brands():
-        return Brand.objects.all()
+
 

@@ -1,6 +1,9 @@
 {% extends "base.html" %} 
 {% block content %}
-<div class="d-flex flex-wrap row vh-100 align-items-center ">
+{% load static %}
+
+
+{% comment %} <div class="d-flex flex-wrap row vh-100 align-items-center ">
   <div class="col-lg-6 col-md-12 pt-5 d-flex justify-content-center">
     <div class="text-center" style="width: 80%">
       <h1 style="font-size: 80px; font-weight: bold; color: #F64F11">
@@ -12,16 +15,16 @@
   </div>
 
   <div class="col-lg-6 col-md-12 pt-5 align-content-center justify-content-center mx-auto">
-    {% load static %}
     <img class="me-1" style="width: 900px;" src="{% static 'image1.png' %}" alt="Example Image" />
   </div>
-</div>
+</div> {% endcomment %}
 
 
 
 <!-- .........brand name.................  -->  
 
 <section >
+
   <h5 class="p-4">Browse By Category</h5>
   <style>
     .mx-container {
@@ -56,15 +59,20 @@
     }
     .bx {
       padding-top: 8px;
+      
     }
+    
   </style>
 
   <div class="container mx-container bg-body-secondary pt-2 pb-1">
     <div class="d-flex flex-wrap justify-content-center">
-      {% for brand in brands %}
+      {% for brand in categories %}
         <div class="m-2">
-          <div class="box text-center">
-            <h5 class="bx">{{ brand.name }}</h5>
+          <div class="box text-center ">
+            <a href="{%url 'category_wise_view' brand.slug%}" class="text-decoration-none text-dark">
+
+                <h5 class="bx ">{{ brand.name }}</h5>
+            </a>
           </div>
         </div>
       {% endfor %}
@@ -72,11 +80,37 @@
   </div>
 </section>
 
+
+<hr>
 <!-- .........Car list.................  -->  
 
 
 
+<section>
+    <h3 class="p-4">Car list</h3>
 
+    <div class="d-flex flex-wrap justify-content-center">
+      {% for car in data %}
+        <div class="card m-3 shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
+          {% if car.image %}
+            <img src="{{ car.image.url }}" alt="{{ car.name }}" />
+          {% else %}
+            <img src="{% static 'placeholder_image.jpg' %}" alt="Placeholder Image" />
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ car.name }}</h5>
+            <p class="card-text">{{ car.description|truncatechars:50 }}</p>
+            <p class="card-text">Available: {{ car.quantity }}</p>
+            <p class="card-text">Price: ${{ car.price }}</p>
+            <p class="card-text bg-secondary rounded-4 w-50 text-center">{{ car.brand.name }}</p>
+            {% if request.user.is_authenticated %}
+            <a href="#" class="btn btn-primary">Add Card</a>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
 
 
 {% endblock %}
