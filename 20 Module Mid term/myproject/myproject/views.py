@@ -1,11 +1,7 @@
-from typing import Any
 from django.shortcuts import render, redirect, get_object_or_404
 from cars import models ,forms
 from cars.models import Car ,Purchase,Brand 
 from django.views.generic import DetailView
-from cars.forms import CommentForm
-from django.http import HttpResponseRedirect
-from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from cars.models import Purchase
 from django.views.generic import DetailView
@@ -13,6 +9,7 @@ from django.views.generic import DetailView
 
 def home(request, category_slug=None):
     data = models.Car.objects.all()
+    for_id = Car.objects.all()
 
     if category_slug is not None:
         # category = get_object_or_404(Brand, slug=category_slug)
@@ -21,7 +18,7 @@ def home(request, category_slug=None):
         data = models.Car.objects.filter(category=category)
     categories = Brand.objects.all()
 
-    return render(request, 'home.html', {'data': data, 'categories': categories})
+    return render(request, 'home.html', {'data': data, 'categories': categories,'for_id': for_id})
 
 
 class DetailPostView(DetailView):
@@ -35,7 +32,7 @@ class DetailPostView(DetailView):
         comment_form = forms.CommentForm(data=request.POST)
         if comment_form.is_valid():
             new_comment = comment_form.save(commit=False)
-            new_comment.car = post  # Set the car_id field
+            new_comment.car = post  
             new_comment.save()
         return self.get(request, *args, **kwargs)
 

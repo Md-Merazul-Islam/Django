@@ -1,16 +1,12 @@
 from .forms import CarForm
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib import messages
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
 from django.views.generic import ListView, CreateView
 from .models import Car
 from brand.models import Brand
 from django.contrib.messages.views import SuccessMessageMixin
-from . import forms, models
-from .models import Car, Comment
-from .forms import CommentForm
+from .models import Car
 
 # add car
 class AddCarView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
@@ -39,7 +35,6 @@ def car_list_by_brand(request, category_slug=None):
     data = Car.objects.all()
 
     if category_slug is not None:
-        # category = get_object_or_404(Brand, slug=category_slug)
         category = Brand.objects.get(slug=category_slug) # kon object er part ta ber kore niye aslo
         data = Car.objects.filter(category=category )
     categories = Brand.objects.all()
