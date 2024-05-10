@@ -9,7 +9,7 @@ from django.views.generic import DetailView
 
 def home(request, category_slug=None):
     data = models.Car.objects.all()
-    for_id = Car.objects.all()
+
 
     if category_slug is not None:
         # category = get_object_or_404(Brand, slug=category_slug)
@@ -18,7 +18,7 @@ def home(request, category_slug=None):
         data = models.Car.objects.filter(category=category)
     categories = Brand.objects.all()
 
-    return render(request, 'home.html', {'data': data, 'categories': categories,'for_id': for_id})
+    return render(request, 'home.html', {'data': data, 'categories': categories})
 
 
 class DetailPostView(DetailView):

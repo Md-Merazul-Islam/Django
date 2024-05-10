@@ -220,10 +220,11 @@
               </ul>
             </div>
             {% if request.user.is_authenticated %}
-        
+            <form method="post" action="{% url 'purchase_car' car.id %}">
               {% csrf_token %}
               <button type="submit" class="btn btn-primary">Buy Now</button>
-              {% endif %}
+            </form>
+            {% endif %}
           </div>
         </div>
       {% endfor %}
