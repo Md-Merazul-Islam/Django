@@ -23,11 +23,17 @@
 /* Styles for small devices (landscape phones) */
 @media only screen and (max-width: 576px) {
   /* Adjustments for small devices */
+  .nav-item{
+    padding-top: 10px;
+  }
 }
 
 /* Styles for medium devices (tablets) */
 @media only screen and (min-width: 577px) and (max-width: 768px) {
   /* Adjustments for tablets */
+  .nav-item{
+    padding-top: 10px;
+  }
 }
 
 /* Styles for large devices (desktops) */
@@ -55,6 +61,7 @@
 @media (max-width: 768px) {
   .mx-container {
       max-width: 90%; 
+      
   }
 }
 
@@ -113,7 +120,7 @@
   
         <form class="d-flex " role="search">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn  btn-outline-light" type="submit">Search</button>
+          <button class="btn  btn-outline-light " type="submit">Search</button>
         </form>
   
         <div class='d-flex'>
@@ -123,15 +130,15 @@
               {% comment %} <a class="btn btn-warning mx-4" aria-current="page" href="{% url 'profile' %}">Profile</a> {% endcomment %}
             </li>
             <li class="nav-item">
-              <a class="btn btn-warning mx-2" aria-current="page" href="{% url 'profile_views' %}">Profile</a>
-              <a class="btn btn-warning ms-2" aria-current="page" href="{% url 'user_logout' %}">Logout</a>
+              <a class=" pad   btn btn-warning mx-2  " aria-current="page" href="{% url 'profile_views' %}">Profile</a>
+              <a class=" pad   btn btn-warning ms-2 " aria-current="page" href="{% url 'user_logout' %}">Logout</a>
             </li>
             {% else %}
-            <li class="nav-item">
-              <a class="btn btn-info mx-2" aria-current="page" href="{% url 'register' %}">Register</a>
+            <li class="   nav-item">
+              <a class="pad   btn btn-info mx-2 " aria-current="page" href="{% url 'register' %}">Register</a>
             </li>
             <li class="nav-item">
-              <a class="btn btn-warning ms-2" aria-current="page" href="{% url 'user_login' %}">Login</a>
+              <a class="pad btn btn-warning ms-2 " aria-current="page" href="{% url 'user_login' %}">Login</a>
             </li>
             {% endif %}
           </ul>

@@ -224,11 +224,25 @@
   <!-- .........Car list................. -->
 
   <section>
+
+  <style>
+    .card{
+      transition: all 0.3s ease-in-out;
+    }
+     .card:hover {
+      cursor: pointer;
+      transform: scale(1.05);
+
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    }
+  </style>
+
     <h3 class="p-4">Car list found : {{ data|length }}</h3>
 
     <div class="d-flex flex-wrap justify-content-center">
       {% for car in data %}
-        <div class="card m-3 shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
+        <div class=" card m-3 shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
           {% if car.image %}
             <img src="{{ car.image.url }}" alt="{{ car.name }}" />
           {% else %}
