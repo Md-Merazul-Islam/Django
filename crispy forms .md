@@ -439,3 +439,33 @@ INSTALLED_APPS = (
             {% endblock %}
 
             
+# For all device Media Quary Css
+
+      /* Default styles */
+      
+      /* Styles for small devices (landscape phones) */
+      @media only screen and (max-width: 576px) {
+        /* Adjustments for small devices */
+      }
+      
+      /* Styles for medium devices (tablets) */
+      @media only screen and (min-width: 577px) and (max-width: 768px) {
+        /* Adjustments for tablets */
+      }
+      
+      /* Styles for large devices (desktops) */
+      @media only screen and (min-width: 769px) and (max-width: 992px) {
+        /* Adjustments for desktops */
+      }
+      
+      /* Styles for larger devices (large desktops) */
+      @media only screen and (min-width: 993px) and (max-width: 1200px) {
+        /* Adjustments for larger desktops */
+      }
+      
+      /* Styles for extra-large devices (extra large desktops) */
+      @media only screen and (min-width: 1201px) {
+        /* Adjustments for extra-large desktops */
+}
+
+  
