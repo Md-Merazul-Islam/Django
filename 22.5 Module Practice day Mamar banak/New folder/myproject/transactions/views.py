@@ -1,8 +1,9 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.utils import timezone
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import CreateView, ListView
 from transactions.models import Transaction
 from datetime import datetime
@@ -13,6 +14,7 @@ from django.shortcuts import redirect
 from django.views.generic import FormView
 from .forms import TransferForm
 from .models import Transfer
+from accounts.models import UserBankAccount
 from transactions.forms import (
     DepositForm,
     WithdrawForm,
@@ -193,12 +195,12 @@ class LoanListView(LoginRequiredMixin,ListView):
         print(queryset)
         return queryset
     
-    
+
 
 class TransferMoneyView(FormView):
     template_name = 'transactions/transfer_form.html'
     form_class = TransferForm
-    success_url = '/'
+    success_url = 'home'  # Update the success URL as needed
 
     def form_valid(self, form):
         sender_account = self.request.user.account
@@ -221,3 +223,31 @@ class TransferMoneyView(FormView):
     def form_invalid(self, form):
         messages.error(self.request, 'Transfer failed! Please check the details.')
         return super().form_invalid(form)
+    
+    
+    
+    
+    
+    
+@login_required
+def transfer_money(request):
+    form = TransferForm(request.POST or None)
+    if request.method == 'POST':
+        if form.is_valid():
+            sender_account = request.user.account
+            receiver_account_no = form.cleaned_data['receiver_account_no']
+            receiver_account = UserBankAccount.objects.get(account_no=receiver_account_no)
+            amount = form.cleaned_data['amount']
+
+            if sender_account.balance < amount:
+                messages.error(request, 'Insufficient balance. Transfer failed.')
+            else:
+                sender_account.balance -= amount
+                receiver_account.balance += amount
+                sender_account.save()
+                receiver_account.save()
+
+                Transfer.objects.create(sender=sender_account, receiver=receiver_account, amount=amount)
+                messages.success(request, f'Successfully transferred ${amount} to Account No: {receiver_account_no}.')
+                return redirect('home')
+    return render(request, 'transactions/transfer_form.html', {'form': form})

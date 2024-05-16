@@ -19,13 +19,15 @@ class UserRegistrationView(FormView):
         print(form.cleaned_data)
         user = form.save()
         login(self.request, user)
-        print(user)
+        messages.success(self.request, f'Account created fo successfully.')
+
         return super().form_valid(form) 
     
 
 class UserLoginView(LoginView):
     template_name = 'accounts/user_login.html'
     def get_success_url(self):
+        messages.success(self.request, f'Logged successfully. ')
         return reverse_lazy('home')
     
 class LogoutView(LoginRequiredMixin, RedirectView):

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Transaction
+from .models import Transaction,Transfer
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
@@ -17,3 +17,6 @@ class TransactionAdmin(admin.ModelAdmin):
 
     get_is_bankrupt.short_description = 'Is Bankrupt'
     get_is_bankrupt.boolean = True
+
+
+admin.site.register(Transfer)
