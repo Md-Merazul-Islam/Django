@@ -1,7 +1,9 @@
 {% extends 'base.html' %} 
 {% load static %} 
 
-{% block head_title %}Banking System{% endblock %} {% block content %}
+{% block head_title %}Banking System{% endblock %} 
+
+{% block content %}
 <div class="container mx-auto flex flex-col md:flex-row items-center my-12 md:my-24">
 
     
@@ -16,7 +18,7 @@
         </div>
     </div>
     <div class="w-full lg:w-1/2 lg:py-6 text-center ">
-        <img class ="rounded-2xl" src ="{% static './img/bank.jpg' %}"/>
+        <img class ="rounded-2xl" src ="{% static 'img/bank.png' %}"/>
     </div>
 </div>
 
