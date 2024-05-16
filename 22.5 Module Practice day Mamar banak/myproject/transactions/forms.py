@@ -61,3 +61,11 @@ class LoanRequestForm(TransactionForm):
         amount = self.cleaned_data.get('amount')
 
         return amount
+
+    
+    
+class TransferForm(forms.ModelForm):
+    recipient_account_number = forms.IntegerField()
+    class Meta:
+        model = Transaction
+        fields =['amount','recipient_account_number']

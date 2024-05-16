@@ -1,8 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Transaction
-
+from .models import Transaction,Bank
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
@@ -14,3 +13,10 @@ class TransactionAdmin(admin.ModelAdmin):
         obj.balance_after_transaction = obj.account.balance
         obj.account.save()
         super().save_model(request, obj, form, change)
+
+
+
+@admin.register(Bank)
+class BankAdmin(admin.ModelAdmin):
+    list_display = ['id','is_bankrupt']
+    list_editable =['is_bankrupt']
