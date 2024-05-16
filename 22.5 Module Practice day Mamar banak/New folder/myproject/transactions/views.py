@@ -194,9 +194,6 @@ class LoanListView(LoginRequiredMixin,ListView):
         return queryset
     
     
-    
-    
-
 
 class TransferMoneyView(FormView):
     template_name = 'transactions/transfer_form.html'
@@ -222,5 +219,5 @@ class TransferMoneyView(FormView):
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        messages.error(self.request, 'Transfer failed. Please check the details.')
+        messages.error(self.request, 'Transfer failed! Please check the details.')
         return super().form_invalid(form)
