@@ -89,10 +89,6 @@ class WithdrawMoneyView(TransactionCreateMixin):
             messages.error(self.request,'The bank is bankrupt.Withdrawal are disabled')
             return redirect('withdraw_money')
         
-        
-        if self.request.user.account.is_bankrupt:
-            messages.error(self.request, 'The bank is bankrupt. Withdrawal operation is disabled.')
-            return redirect('withdraw_money')
 
         if amount > self.request.user.account.balance:
             messages.error(self.request, 'Insufficient funds.')
