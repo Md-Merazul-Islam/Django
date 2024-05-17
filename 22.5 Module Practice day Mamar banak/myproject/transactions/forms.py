@@ -1,6 +1,9 @@
 from django import forms
 from .models import Transaction
 
+from django import forms
+from .models import Transfer
+from accounts.models import UserBankAccount
 
 class TransactionForm(forms.ModelForm):
     class Meta:
@@ -61,11 +64,13 @@ class LoanRequestForm(TransactionForm):
         amount = self.cleaned_data.get('amount')
 
         return amount
+    
+class TransferForm(forms.Form):
+    amount = forms.DecimalField(decimal_places=2, max_digits=12)
+    receiver_account_no = forms.IntegerField()
 
-    
-    
-class TransferForm(forms.ModelForm):
-    recipient_account_number = forms.IntegerField()
-    class Meta:
-        model = Transaction
-        fields =['amount','recipient_account_number']
+    def clean_receiver_account_no(self):
+        receiver_account_no = self.cleaned_data.get('receiver_account_no')
+        if not UserBankAccount.objects.filter(account_no=receiver_account_no).exists():
+            raise forms.ValidationError('Receiver account does not exist.')
+        return receiver_account_no

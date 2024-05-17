@@ -1,12 +1,10 @@
 from django.contrib import admin
-
-# Register your models here.
-from .models import Transaction,Bank
+from .models import Transaction,Transfer
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
     list_display = ['account', 'amount', 'balance_after_transaction',
-                    'transaction_type', 'loan_approve']
+                    'transaction_type', 'loan_approve', 'get_is_bankrupt']
 
     def save_model(self, request, obj, form, change):
         obj.account.balance += obj.amount
@@ -14,9 +12,11 @@ class TransactionAdmin(admin.ModelAdmin):
         obj.account.save()
         super().save_model(request, obj, form, change)
 
+    def get_is_bankrupt(self, obj):
+        return obj.account.is_bankrupt
+
+    get_is_bankrupt.short_description = 'Is Bankrupt'
+    get_is_bankrupt.boolean = True
 
 
-@admin.register(Bank)
-class BankAdmin(admin.ModelAdmin):
-    list_display = ['id','is_bankrupt']
-    list_editable =['is_bankrupt']
+admin.site.register(Transfer)
