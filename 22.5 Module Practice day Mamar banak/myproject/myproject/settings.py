@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'accounts',
     'core',
+    'bankrupt_app',
+
     'transactions',
     "crispy_forms",
     "crispy_tailwind",

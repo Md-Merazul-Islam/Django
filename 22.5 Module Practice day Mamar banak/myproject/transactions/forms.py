@@ -1,8 +1,7 @@
 from django import forms
 from .models import Transaction
-
+from bankrupt_app.models import IsBankrupt
 from django import forms
-from .models import Transfer
 from accounts.models import UserBankAccount
 
 class TransactionForm(forms.ModelForm):
@@ -45,6 +44,12 @@ class WithdrawForm(TransactionForm):
         max_withdraw_amount = 20000
         balance = account.balance
         amount = self.cleaned_data.get('amount')
+        
+        bankrupt_status = IsBankrupt.objects.first()
+        if bankrupt_status and bankrupt_status.is_bankrupt:
+            raise forms.ValidationError('The bank is bankrupt and cannot process withdraws. ')
+        
+        
         if amount < min_withdraw_amount:
             raise forms.ValidationError(
                 f'You can withdraw at least {min_withdraw_amount}$')

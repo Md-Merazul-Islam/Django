@@ -15,6 +15,7 @@ from django.views.generic import FormView
 from .forms import TransferForm
 from .models import Transfer
 from accounts.models import UserBankAccount
+from bankrupt_app.models import IsBankrupt
 from transactions.forms import (
     DepositForm,
     WithdrawForm,
@@ -82,6 +83,12 @@ class WithdrawMoneyView(TransactionCreateMixin):
 
     def form_valid(self, form):
         amount = form.cleaned_data.get('amount')
+        
+        bankrupt_status = IsBankrupt.objects.first()
+        if bankrupt_status and bankrupt_status.is_bankrupt:
+            messages.error(self.request,'The bank is bankrupt.Withdrawal are disabled')
+            return redirect('withdraw_money')
+        
         
         if self.request.user.account.is_bankrupt:
             messages.error(self.request, 'The bank is bankrupt. Withdrawal operation is disabled.')
