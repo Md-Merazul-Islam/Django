@@ -8,6 +8,7 @@ from django.views.generic import CreateView, ListView
 from transactions.models import Transaction
 from datetime import datetime
 from django.http import HttpResponse
+
 from django.db.models import Sum
 from django.views import View
 from django.shortcuts import redirect
@@ -22,6 +23,23 @@ from transactions.forms import (
     LoanRequestForm,
 )
 from transactions.constants import DEPOSIT, WITHDRAWAL,LOAN, LOAN_PAID
+
+#FOR EMAIL 
+
+
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+
+
+
+def send_transaction_email(user, amount, subject, template):
+        message = render_to_string(template, {
+            'user' : user,
+            'amount' : amount,
+        })
+        send_email = EmailMultiAlternatives(subject, '', to=[user.email])
+        send_email.attach_alternative(message, "text/html")
+        send_email.send()
 
 
 class TransactionCreateMixin(LoginRequiredMixin, CreateView):
@@ -47,6 +65,7 @@ class TransactionCreateMixin(LoginRequiredMixin, CreateView):
 
 
 
+
 class DepositMoneyView(TransactionCreateMixin):
     form_class = DepositForm
     title = 'Deposit'
@@ -59,17 +78,25 @@ class DepositMoneyView(TransactionCreateMixin):
         amount = form.cleaned_data.get('amount')
         account = self.request.user.account
         account.balance += amount 
-        account.save(
-            update_fields=[
-                'balance'
-            ]
-        )
+        account.save(update_fields=['balance'])
 
+        # Add success message
         messages.success(
             self.request,
             f'{"{:,.2f}".format(float(amount))}$ was deposited to your account successfully'
         )
 
+        # Send email
+        # mail_subject = 'Deposit Message'
+        # email_message = render_to_string('transactions/deposit_email.html', {
+        #     'user': self.request.user,
+        #     'amount': amount
+        # })
+        # to_email = self.request.user.email
+        # sent_email = EmailMultiAlternatives(mail_subject, '', to=[to_email]) 
+        # sent_email.attach_alternative(email_message, 'text/html')
+        # sent_email.send()
+        send_transaction_email(self.request.user, amount, "Deposit Message", "transactions/deposit_email.html")
         return super().form_valid(form)
 
 
@@ -101,7 +128,8 @@ class WithdrawMoneyView(TransactionCreateMixin):
             self.request,
             f'Successfully withdrawn {"{:,.2f}".format(float(amount))}$ from your account'
         )
-
+        send_transaction_email(self.request.user, amount, "Withdraw Message", "transactions/withdraw_email.html")
+       
         return super().form_valid(form)
     
     
@@ -125,7 +153,9 @@ class LoanRequestView(TransactionCreateMixin):
             self.request,
             f'Loan request for {"{:,.2f}".format(float(amount))}$ submitted successfully'
         )
-
+        
+        send_transaction_email(self.request.user, amount, "Loan request Message", "transactions/loan_email.html")
+       
         return super().form_valid(form)
     
     
@@ -183,7 +213,8 @@ class PayLoanView(LoginRequiredMixin, View):
             self.request,
             f'Loan amount is greater than available balance'
         )
-
+        send_transaction_email(self.request.user, loan.amount, "Loan payed Message", "transactions/loan_pay_email.html")
+       
         return redirect('loan_list')
 
 
@@ -198,40 +229,6 @@ class LoanListView(LoginRequiredMixin,ListView):
         print(queryset)
         return queryset
     
-
-
-class TransferMoneyView(FormView):
-    template_name = 'transactions/transfer_form.html'
-    form_class = TransferForm
-    success_url = 'home'  # Update the success URL as needed
-
-    def form_valid(self, form):
-        sender_account = self.request.user.account
-        receiver_account = form.cleaned_data['receiver']
-        amount = form.cleaned_data['amount']
-
-        if sender_account.balance < amount:
-            messages.error(self.request, 'Insufficient balance. Transfer failed.')
-        else:
-            sender_account.balance -= amount
-            receiver_account.balance += amount
-            sender_account.save()
-            receiver_account.save()
-
-            Transfer.objects.create(sender=sender_account, receiver=receiver_account, amount=amount)
-            messages.success(self.request, f'Successfully transferred ${amount} to {receiver_account.user.username}.')
-
-        return super().form_valid(form)
-
-    def form_invalid(self, form):
-        messages.error(self.request, 'Transfer failed! Please check the details.')
-        return super().form_invalid(form)
-    
-    
-    
-    
-    
-    
 @login_required
 def transfer_money(request):
     form = TransferForm(request.POST or None)
@@ -239,8 +236,13 @@ def transfer_money(request):
         if form.is_valid():
             sender_account = request.user.account
             receiver_account_no = form.cleaned_data['receiver_account_no']
-            receiver_account = UserBankAccount.objects.get(account_no=receiver_account_no)
             amount = form.cleaned_data['amount']
+
+            try:
+                receiver_account = UserBankAccount.objects.get(account_no=receiver_account_no)
+            except UserBankAccount.DoesNotExist:
+                messages.error(request, 'Receiver account does not exist.')
+                return render(request, 'transactions/transfer_form.html', {'form': form})
 
             if sender_account.balance < amount:
                 messages.error(request, 'Insufficient balance. Transfer failed.')
@@ -252,5 +254,7 @@ def transfer_money(request):
 
                 Transfer.objects.create(sender=sender_account, receiver=receiver_account, amount=amount)
                 messages.success(request, f'Successfully transferred ${amount} to Account No: {receiver_account_no}.')
+                send_transaction_email(request.user, amount, "Transfer Money Message", "transactions/transfer_email.html")
                 return redirect('home')
+    
     return render(request, 'transactions/transfer_form.html', {'form': form})
