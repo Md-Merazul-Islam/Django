@@ -1,4 +1,4 @@
-{% for message in messages %}
+{% comment %} {% for message in messages %}
 
 <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md mt-2" role="alert">
     <div class="flex">
@@ -10,4 +10,22 @@
     </div>
 </div>
 
-{% endfor %}
+{% endfor %} {% endcomment %}
+
+
+
+
+{% for message in messages %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        {% for message in messages %}
+            Swal.fire({
+                icon: "{% if message.tags == 'error' %}error{% elif message.tags == 'success' %}success{% elif message.tags == 'warning' %}warning{% else %}info{% endif %}",
+                title: "Status",
+                text: "{{ message }}",
+                confirmButtonText: "Ok"
+            });
+        {% endfor %}
+    });
+</script>
+ {% endfor %}

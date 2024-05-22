@@ -44,11 +44,11 @@ ALLOWED_HOSTS = ["*"]
 # render Database 
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgres://mamarbank_zpah_user:84cdZ5a0mcslc5TPeyHpD4VRyW8Eiiv2@dpg-cp62bdg21fec7389ruf0-a.oregon-postgres.render.com/mamarbank_zpah'
+        default='postgres://mamarbank_jt3o_user:P1iJXNTHgUJYJ6GiNHgyLb9n0YiSEpJ5@dpg-cp6odtfsc6pc73ckaeb0-a.oregon-postgres.render.com/mamarbank_jt3o'
     )
 }
 
-CSRF_TRUSTED_ORIGINS = ['https://mamar-bank-zxqd.onrender.com','https://*.127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://mamar-bank-by-django.onrender.com','https://*.127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.admin',

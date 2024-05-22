@@ -73,6 +73,7 @@ class LoanRequestForm(TransactionForm):
 class TransferForm(forms.Form):
     amount = forms.DecimalField(decimal_places=2, max_digits=12)
     receiver_account_no = forms.IntegerField()
+    
 
     def clean_receiver_account_no(self):
         receiver_account_no = self.cleaned_data.get('receiver_account_no')

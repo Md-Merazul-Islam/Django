@@ -228,33 +228,66 @@ class LoanListView(LoginRequiredMixin,ListView):
         queryset = Transaction.objects.filter(account=user_account,transaction_type=3)
         print(queryset)
         return queryset
+   
+
+
+
+class TransferMoneyView(LoginRequiredMixin, FormView):
+    template_name = 'transactions/transfer_form.html'
+    form_class = TransferForm
+    success_url = reverse_lazy('home')
     
-@login_required
-def transfer_money(request):
-    form = TransferForm(request.POST or None)
-    if request.method == 'POST':
-        if form.is_valid():
-            sender_account = request.user.account
-            receiver_account_no = form.cleaned_data['receiver_account_no']
-            amount = form.cleaned_data['amount']
+    def form_valid(self, form):
+        sender_account = self.request.user.account  # Corrected to self.request.user
+        receiver_account_no = form.cleaned_data['receiver_account_no']
+        amount = form.cleaned_data['amount']
+        
+        try:
+            receiver_account = UserBankAccount.objects.get(account_no=receiver_account_no)
+        except UserBankAccount.DoesNotExist:
+            form.add_error('receiver_account_no', 'Receiver account does not exist.')
+            return self.form_invalid(form)
+        
+        if sender_account.balance < amount:
+            form.add_error(None, 'Insufficient balance. Transfer failed.')  # Corrected to add error to form without specifying a field
+            return self.form_invalid(form)
+        
+        sender_account.balance -= amount
+        receiver_account.balance += amount
+        sender_account.save()
+        receiver_account.save()
 
-            try:
-                receiver_account = UserBankAccount.objects.get(account_no=receiver_account_no)
-            except UserBankAccount.DoesNotExist:
-                messages.error(request, 'Receiver account does not exist.')
-                return render(request, 'transactions/transfer_form.html', {'form': form})
+        Transfer.objects.create(sender=sender_account, receiver=receiver_account, amount=amount)
 
-            if sender_account.balance < amount:
-                messages.error(request, 'Insufficient balance. Transfer failed.')
-            else:
-                sender_account.balance -= amount
-                receiver_account.balance += amount
-                sender_account.save()
-                receiver_account.save()
 
-                Transfer.objects.create(sender=sender_account, receiver=receiver_account, amount=amount)
-                messages.success(request, f'Successfully transferred ${amount} to Account No: {receiver_account_no}.')
-                send_transaction_email(request.user, amount, "Transfer Money Message", "transactions/transfer_email.html")
-                return redirect('home')
-    
-    return render(request, 'transactions/transfer_form.html', {'form': form})
+        # Email to the sender
+        sender_email_subject = 'Transfer Successful'
+        sender_email_message = render_to_string('transactions/transfer_email_sender.html',{
+            'amount': amount,
+            'sender_account_no': sender_account.account_no,
+            'receiver_account_no': receiver_account_no, 
+            'current_balance': sender_account.balance,
+        })
+        send_sender_email = EmailMultiAlternatives(sender_email_subject, '', to=[self.request.user.email])
+        send_sender_email.attach_alternative(sender_email_message, "text/html")
+        send_sender_email.send()
+        
+        
+        # Email to the receiver
+        receiver_email_subject = 'You Received a Transfer'
+        receiver_email_message = render_to_string('transactions/transfer_email_receiver.html',{
+            'amount': amount,
+            'sender_account_no': sender_account.account_no,
+            'receiver_account_no': receiver_account_no, 
+            'current_balance': receiver_account.balance,
+        })
+        send_receiver_email = EmailMultiAlternatives(receiver_email_subject, '', to=[receiver_account.user.email])
+        send_receiver_email.attach_alternative(receiver_email_message, "text/html")
+        send_receiver_email.send()
+        
+        messages.success(self.request, f'Successfully transferred ${amount} to Account No: {receiver_account_no}.')
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'There was an error with your transfer. Please correct the errors below.')
+        return super().form_invalid(form)

@@ -10,6 +10,13 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import RedirectView
 from django.contrib import messages
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.views import PasswordChangeView
+from django.urls import reverse_lazy
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+
+
 class UserRegistrationView(FormView):
     template_name = 'accounts/user_registration.html'
     form_class = UserRegistrationForm
@@ -53,3 +60,25 @@ class UserBankAccountUpdateView(View):
                 form.save()
                 return redirect('home')
             return render(request,self.template_name,{'form':form})
+
+
+def sent_pass_change_email(user,subject,template):
+    message = render_to_string(template,{
+        'user':user
+    })
+    sent_email = EmailMultiAlternatives(subject,'',to=[user.email])
+    sent_email.attach_alternative(message,'text/html')
+    sent_email.send()
+   
+    
+            
+class ChangePasswordView(PasswordChangeView):
+    form_class = PasswordChangeForm
+    success_url = reverse_lazy('home')
+    template_name = 'accounts/change_password.html'
+    
+    def form_valid(self,form):
+        messages.success(self.request, f'Successfully changed your password.')
+        sent_pass_change_email(self.request.user,'Successfully Changed Password', 'accounts/change_pass_email.html')
+        return super().form_valid(form) 
+    

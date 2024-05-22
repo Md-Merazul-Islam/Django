@@ -122,11 +122,18 @@
                     {% endfor %} {% endif %}
                 </div>
             </div>
-            <div class="flex items-center justify-between">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                    Register
-                </button>
+            <div class="flex items-center ">
+                <div>
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Register</button>
+                </div>
+              <div class="pl-6">
+                {% if request.user.is_authenticated %}
+                <!-- Change password link styled as a button -->
+                <a href="{% url 'pass_change' %}" class="text-sky-500 underline " style="color:blue;">Change Password</a>
+                {% endif %}
+              </div>
             </div>
+            
         </form>
     </div>
 </div>

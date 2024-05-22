@@ -61,3 +61,5 @@ typing_extensions
 tzdata
 virtualenv
 wcwidth
+psycopg2-binary
+dj-database-url
