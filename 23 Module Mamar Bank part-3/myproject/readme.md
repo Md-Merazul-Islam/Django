@@ -27,7 +27,7 @@
 # [Best Practices for Building a Bank Management System with Django](https://mamar-bank-by-django.onrender.com/)
 
 
-presentation short video : https://drive.google.com/file/d/1zrybGsLHCMgc4gNgmWTXXB1nOez2H-3t/view?usp=sharing
+presentation short video : https://drive.google.com/drive/folders/1MHsjNntI-JdU-yVBR7ycNKI6dGDfpOqK?usp=sharing
 
 [live link ](https://mamar-bank-by-django.onrender.com/)
 
