@@ -24,11 +24,12 @@
    <style>
      .card {
        background: white;
-      padding: 1rem; /* Adjust the padding */
-      margin: 0.5rem; /* Adjust the margin */
+      padding: 1rem; 
+      margin: 0.5rem; 
       display: flex;
       flex-direction: column;
-      align-items: center; /* Align items horizontally at the center */
+      align-items: center;
+      box-shadow: 1px 4px 10px;
     }
   
     .card img {
@@ -45,7 +46,8 @@
     <section class="p-5 bg-green-50 md:p-0 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 items-start">
       {% for book in books %}
       <section class="card bg-purple-50 text-center transform duration-500 hover:-translate-y-2 cursor-pointer">
-        <h1 class="text-3xl my-5">{{ book.title }}</h1>
+        <a href="{% url 'Book_detail' book.id %}" class="text-decoration-none text-gray-800"><h1 class="text-3xl my-5">{{ book.title }}</h1> </a>
+        
         <img src="{{ book.image.url }}" alt="{{ book.title }}" />
         <div class="space-x-1 flex justify-center mt-4">
           {% for _ in "12345" %}
