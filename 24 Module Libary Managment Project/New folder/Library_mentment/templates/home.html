@@ -8,10 +8,10 @@
   <section class="">
     <h5 class="p-4">Browse By Category</h5>
     
-    <div class="mx-auto max-w-6xl bg-gray-200 py-2 px-4 mb-8 flex flex-wrap justify-center">
+    <div class="mx-auto  bg-white py-2  mb-8 flex flex-wrap justify-center">
       {% for category in categories %}
         <div class="m-2">
-          <div class="box text-center border border-gray-300 rounded-md py-2 px-4 hover:shadow-md">
+          <div class="box text-center border border-gray-400 rounded-md py-2 px-4 hover:shadow-md">
             <a href="{% url 'category_wise_view' category.slug %}" class="text-decoration-none text-9xl text-gray-800"><h5>{{ category.name }}</h5></a>
           </div>
         </div>
@@ -20,42 +20,48 @@
   </section>
 
   <hr />
-  <!-- .........book card list................. -->
-
-  <section>
-    <h3 class="p-4">Book list found: {{ data|length }}</h3>
-
-    <div class="flex flex-wrap justify-center">
+  
+   <style>
+     .card {
+       background: white;
+      padding: 1rem; /* Adjust the padding */
+      margin: 0.5rem; /* Adjust the margin */
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* Align items horizontally at the center */
+    }
+  
+    .card img {
+      max-width: 250px;
+      width: 100%; 
+      height: auto; 
+      max-height: 220px; 
+      object-fit: cover; 
+      margin-bottom: 1rem; 
+    }
+  </style>
+  
+  <section class="container mx-auto p-10 md:py-12 px-0 md:p-8 md:px-0">
+    <section class="p-5 bg-green-50 md:p-0 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 items-start">
       {% for book in books %}
-        <div class="card m-3 shadow-md p-3 mb-5 bg-white rounded-lg w-72">
-          {% if book.image %}
-            <img src="{{ book.image.url }}" alt="{{ book.title }}" class="w-full h-40 object-cover rounded-t-lg" />
-          {% else %}
-            <img src="{% static 'placeholder_image.jpg' %}" alt="Placeholder Image" class="w-full h-40 object-cover rounded-t-lg" />
-          {% endif %}
-          <div class="card-body">
-            <a href="{% url 'Book_detail' book.id %}" class="text-decoration-none text-gray-800"><h5 class="card-title">{{ book.title }}</h5></a>
-            <p class="card-text">{{ book.description|truncatechars:50 }}</p>
-            <p class="card-text">Available: {{ book.quantity }}</p>
-            <p class="card-text">Price: ${{ book.price }}</p>
-            <div>
-              <ul class="text-start">
-                {% for category in book.category.all %}
-                  <span class="card-text bg-gray-300 rounded-md m-1 px-2">{{ category.title }}</span>
-                {% endfor %}
-              </ul>
-            </div>
-            {% if request.user.is_authenticated %}
-            <form method="post" action="{% url 'borrow_book' book.id %}">
-              {% csrf_token %}
-              <button type="submit" class="btn btn-primary">Buy Now</button>
-            </form>
-            {% endif %}
-          </div>
+      <section class="card bg-purple-50 text-center transform duration-500 hover:-translate-y-2 cursor-pointer">
+        <h1 class="text-3xl my-5">{{ book.title }}</h1>
+        <img src="{{ book.image.url }}" alt="{{ book.title }}" />
+        <div class="space-x-1 flex justify-center mt-4">
+          {% for _ in "12345" %}
+          <svg class="w-4 h-4 mx-px fill-current text-{{ book.rating_color }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14">
+            <path d="M6.43 12l-2.36 1.64a1 1 0 0 1-1.53-1.11l.83-2.75a1 1 0 0 0-.35-1.09L.73 6.96a1 1 0 0 1 .59-1.8l2.87-.06a1 1 0 0 0 .92-.67l.95-2.71a1 1 0 0 1 1.88 0l.95 2.71c.13.4.5.66.92.67l2.87.06a1 1 0 0 1 .59 1.8l-2.3 1.73a1 1 0 0 0-.34 1.09l.83 2.75a1 1 0 0 1-1.53 1.1L7.57 12a1 1 0 0 0-1.14 0z"></path>
+          </svg>
+          {% endfor %}
         </div>
+  
+        <p class="card-text">{{ book.description|truncatechars:70 }}</p>
+        <p class="card-text">Available: {{ book.quantity }}</p>
+        <h2 class="font-semibold mb-4">${{ book.price }}</h2>
+        <button class="p-2 px-6 bg-purple-500 text-white rounded-md hover:bg-purple-600">Add To Cart</button>
+      </section>
       {% endfor %}
-    </div>
+    </section>
   </section>
-</div>
-
+  
 {% endblock %}
