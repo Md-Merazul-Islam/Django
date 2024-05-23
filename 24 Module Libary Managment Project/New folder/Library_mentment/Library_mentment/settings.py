@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'core',
     'users',
     'books',
+    'transactions',
       "crispy_forms",
     "crispy_tailwind",
 ]
