@@ -5,6 +5,7 @@ from django.views.generic import DetailView
 from django.contrib.auth.decorators import login_required
 from books.models import Purchase
 from django.views.generic import DetailView
+
 def home(request, category_slug=None):
     books = Book.objects.all()
 
@@ -17,30 +18,63 @@ def home(request, category_slug=None):
 
 
 
-class DetailPostView(DetailView):
-    model = models.Book
-    form_class = forms.BookForm
-    pk_url_kwarg = 'id'
+# class DetailPostView(DetailView):
+#     model = models.Book
+#     form_class = forms.BookForm
+#     pk_url_kwarg = 'id'
+#     template_name = 'book_detail.html'
+
+#     def post(self, request, *args, **kwargs):
+#         post = self.get_object()
+#         comment_form = forms.ReviewForm(data=request.POST)
+#         if comment_form.is_valid():
+#             new_comment = comment_form.save(commit=False)
+#             new_comment.book = post  
+#             new_comment.save()
+#         return self.get(request, *args, **kwargs)
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         post = self.object
+#         comments = post.comments.all()
+#         comment_form = forms.ReviewForm()
+
+#         context['comments'] = comments
+#         context['comment_form'] = comment_form
+#         return context
+
+
+
+
+from django.views.generic import DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin  # Import LoginRequiredMixin
+from books.models import Book, Review
+from books.forms import ReviewForm
+
+class DetailBookView( DetailView):  # Add LoginRequiredMixin
+    model = Book
     template_name = 'book_detail.html'
+    form_class = ReviewForm
 
     def post(self, request, *args, **kwargs):
-        post = self.get_object()
-        comment_form = forms.ReviewForm(data=request.POST)
+        book = self.get_object()
+        comment_form = self.form_class(data=request.POST)
         if comment_form.is_valid():
             new_comment = comment_form.save(commit=False)
-            new_comment.book = post  
+            new_comment.book = book
+            new_comment.user = request.user  # Now request.user will always be a User instance
             new_comment.save()
         return self.get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        post = self.object
-        comments = post.comments.all()
-        comment_form = forms.ReviewForm()
-
-        context['comments'] = comments
+        book = self.object
+        reviews = Review.objects.filter(book=book)
+        comment_form = self.form_class()
+        context['reviews'] = reviews
         context['comment_form'] = comment_form
         return context
+
 
 
 @login_required
