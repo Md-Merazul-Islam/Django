@@ -15,12 +15,24 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include
-from core.views import HomeView
+from django.urls import path, include
+
+from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('account/',include('users.urls')),
-    path('',HomeView.as_view(),name='home')
+    path('account/', include('users.urls')),
+    path('books/', include('books.urls')),
+    path('', views.home, name='name'),
+    path('category/<slug:category_slug>/', views.home,name='category_wise_view'),
+    path('books/details/<int:id>/', views.DetailPostView.as_view(), name='Book_detail'),
+    path('borrow-book/<int:book_id>/',views.Borrow_Book,name='borrow_book')
+
+
 ]
 
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
