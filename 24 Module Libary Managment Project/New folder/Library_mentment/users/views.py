@@ -3,7 +3,7 @@ from django.views.generic import FormView
 from .forms import UserRegistrationForm ,UserUpdateForm
 from django.contrib.auth import login, logout
 from django.urls import reverse_lazy
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView
 from django.views import View
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin

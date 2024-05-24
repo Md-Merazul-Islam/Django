@@ -2,23 +2,18 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.utils import timezone
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import CreateView, ListView
 from .models import Transaction
 from datetime import datetime
-from django.http import HttpResponse
-
 from django.db.models import Sum
-from django.views import View
 from django.shortcuts import redirect
-from django.views.generic import FormView
 from .forms import  DepositForm
 from books.models import Book,BorrowingHistory
-
 from users.models import UserAccount
-
 from .constants import DEPOSIT
+from django.contrib import messages
+
 
 #FOR EMAIL 
 from django.core.mail import EmailMultiAlternatives
@@ -83,9 +78,6 @@ class DepositMoneyView(TransactionCreateMixin):
         return super().form_valid(form)
 
 
-
- 
-    
 class TransactionReportView(LoginRequiredMixin, ListView):
     template_name = 'transactions/transaction_report.html'
     model = Transaction
@@ -117,60 +109,6 @@ class TransactionReportView(LoginRequiredMixin, ListView):
         })
 
         return context
-    
-    
-from books.forms import BorrowBookForm
-   
-# @login_required
-# def Borrow_Book(request,book_id):
-#     book = get_object_or_404(Book, pk=book_id)
-#     account = UserAccount.objects.get(user=request.user)
-#     if request.method =='POST':
-        
-#         form = BorrowBookForm(request.POST)
-#         if form.is_valid():
-#             if book.quantity <1:
-#                 messages.error(request='The book is currently not available.')
-#             elif account.balance < book.price :
-#                 messages.error('You do not have enough balance to borrow this book!')
-#             else:
-#                 BorrowingHistory.objects.create(user= request.user, book=book)
-#                 book.quantity -=1
-#                 book.save()
-#                 account.balance-=book.price
-#                 account.save(update_fields=['balance'])
-#                 messages.success(request,f'you hav successfully borrowed {book.title} book. ')
-#                 return redirect('borrowing_history') 
-#     else:
-#         form =BorrowBookForm()
-#     return render(request,'transactions/borrow_book.html',{'from':form,'book':book})
-
-
-from django.contrib import messages
-
-# @login_required
-# def Borrow_Book(request, book_id):
-#     book = get_object_or_404(Book, pk=book_id)
-#     account = UserAccount.objects.get(user=request.user)
-    
-#     if book.quantity < 1:
-#         messages.error(request, 'The book is currently not available.')
-#         return redirect('borrowing_history')
-        
-#     if account.balance < book.price:
-#         messages.error(request, 'You do not have enough balance to borrow this book!')
-#         return redirect('borrowing_history')
-
-#     BorrowingHistory.objects.create(user=request.user, book=book)
-#     book.quantity -= 1
-#     book.save()
-#     account.balance -= book.price
-#     account.save(update_fields=['balance'])
-    
-#     messages.success(request, f'You have successfully borrowed {book.title} book.')
-#     return redirect('borrowing_history')
-
-         
 
 @login_required
 def Borrow_Book(request, book_id):
@@ -198,16 +136,10 @@ def Borrow_Book(request, book_id):
     return redirect('borrowing_history')
 
          
-         
-         
-         
-        
 @login_required
 def borrowing_history_show(request):
     borrowings = BorrowingHistory.objects.filter(user= request.user).order_by('-borrow_date')
     return render(request,'transactions/borrowing_history.html',{'borrowings':borrowings})
-
-
 
 
 @login_required
