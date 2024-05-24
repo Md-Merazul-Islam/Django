@@ -1,6 +1,7 @@
 from django import forms
 from .models import Book, Review
 
+
 class BookForm(forms.ModelForm):
     class Meta:
         model = Book
@@ -16,3 +17,7 @@ class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = ['rating', 'comment']
+
+
+class BorrowBookForm(forms.Form):
+    confirm = forms.BooleanField(label="Confirm you want to borrow this book")

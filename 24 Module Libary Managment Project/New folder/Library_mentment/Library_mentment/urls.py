@@ -12,7 +12,7 @@ urlpatterns = [
     path('', views.home, name='home'),  
     path('category/<slug:category_slug>/', views.home, name='category_wise_view'),
     path('books/details/<int:pk>/', views.DetailBookView.as_view(), name='Book_detail'),
-    path('borrow-book/<int:book_id>/', views.Borrow_Book, name='borrow_book'),
+    # path('borrow-book/<int:book_id>/', views.Borrow_Book, name='borrow_book'),
 ]
 
 if settings.DEBUG:

@@ -15,7 +15,7 @@ class Book(models.Model):
     image = models.ImageField(upload_to='books/media/uploads/', blank=True, null=True)
     quantity = models.PositiveIntegerField(default=0)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    purchase_history = models.ManyToManyField(User, through='Purchase')
+
 
     def __str__(self):
         return self.title
@@ -38,7 +38,9 @@ class Review(models.Model):
     def __str__(self):
         return f"{self.book.title} - {self.user.username}"
 
-class Purchase(models.Model):
+class BorrowingHistory(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
-    purchase_date = models.DateTimeField(auto_now_add=True)
+    borrow_date = models.DateTimeField(auto_now_add=True)
+    quantity = models.PositiveIntegerField(default=1)
+    

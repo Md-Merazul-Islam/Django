@@ -14,6 +14,7 @@ from django.views import View
 from django.shortcuts import redirect
 from django.views.generic import FormView
 from .forms import  DepositForm
+from books.models import Book,BorrowingHistory
 
 from users.models import UserAccount
 
@@ -79,17 +80,6 @@ class DepositMoneyView(TransactionCreateMixin):
             f'{"{:,.2f}".format(float(amount))}$ was deposited to your account successfully'
         )
 
-        # Send email
-        # mail_subject = 'Deposit Message'
-        # email_message = render_to_string('transactions/deposit_email.html', {
-        #     'user': self.request.user,
-        #     'amount': amount
-        # })
-        # to_email = self.request.user.email
-        # sent_email = EmailMultiAlternatives(mail_subject, '', to=[to_email]) 
-        # sent_email.attach_alternative(email_message, 'text/html')
-        # sent_email.send()
-        # send_transaction_email(self.request.user, amount, "Deposit Message", "transactions/deposit_email.html")
         return super().form_valid(form)
 
 
@@ -127,3 +117,113 @@ class TransactionReportView(LoginRequiredMixin, ListView):
         })
 
         return context
+    
+    
+from books.forms import BorrowBookForm
+   
+# @login_required
+# def Borrow_Book(request,book_id):
+#     book = get_object_or_404(Book, pk=book_id)
+#     account = UserAccount.objects.get(user=request.user)
+#     if request.method =='POST':
+        
+#         form = BorrowBookForm(request.POST)
+#         if form.is_valid():
+#             if book.quantity <1:
+#                 messages.error(request='The book is currently not available.')
+#             elif account.balance < book.price :
+#                 messages.error('You do not have enough balance to borrow this book!')
+#             else:
+#                 BorrowingHistory.objects.create(user= request.user, book=book)
+#                 book.quantity -=1
+#                 book.save()
+#                 account.balance-=book.price
+#                 account.save(update_fields=['balance'])
+#                 messages.success(request,f'you hav successfully borrowed {book.title} book. ')
+#                 return redirect('borrowing_history') 
+#     else:
+#         form =BorrowBookForm()
+#     return render(request,'transactions/borrow_book.html',{'from':form,'book':book})
+
+
+from django.contrib import messages
+
+# @login_required
+# def Borrow_Book(request, book_id):
+#     book = get_object_or_404(Book, pk=book_id)
+#     account = UserAccount.objects.get(user=request.user)
+    
+#     if book.quantity < 1:
+#         messages.error(request, 'The book is currently not available.')
+#         return redirect('borrowing_history')
+        
+#     if account.balance < book.price:
+#         messages.error(request, 'You do not have enough balance to borrow this book!')
+#         return redirect('borrowing_history')
+
+#     BorrowingHistory.objects.create(user=request.user, book=book)
+#     book.quantity -= 1
+#     book.save()
+#     account.balance -= book.price
+#     account.save(update_fields=['balance'])
+    
+#     messages.success(request, f'You have successfully borrowed {book.title} book.')
+#     return redirect('borrowing_history')
+
+         
+
+@login_required
+def Borrow_Book(request, book_id):
+    book = get_object_or_404(Book, pk=book_id)
+    account = UserAccount.objects.get(user=request.user)
+    borrowing, created = BorrowingHistory.objects.get_or_create(user=request.user, book=book)
+    if not created:
+        borrowing.quantity +=1
+        borrowing.save()
+        
+    if book.quantity < 1:
+        messages.error(request, 'The book is currently not available.')
+        return redirect('borrowing_history')
+        
+    if account.balance < book.price:
+        messages.error(request, 'You do not have enough balance to borrow this book!')
+        return redirect('borrowing_history')
+
+    book.quantity -= 1
+    book.save()
+    account.balance -= book.price
+    account.save(update_fields=['balance'])
+    
+    messages.success(request, f'You have successfully borrowed {book.title} book.')
+    return redirect('borrowing_history')
+
+         
+         
+         
+         
+        
+@login_required
+def borrowing_history_show(request):
+    borrowings = BorrowingHistory.objects.filter(user= request.user).order_by('-borrow_date')
+    return render(request,'transactions/borrowing_history.html',{'borrowings':borrowings})
+
+
+
+
+@login_required
+def return_book(request, borrowing_id):
+    borrowing = get_object_or_404(BorrowingHistory, pk=borrowing_id)
+    user_account = UserAccount.objects.get(user=request.user)
+    user_account.balance += borrowing.book.price
+    user_account.save()
+    borrowing.book.quantity += 1
+    borrowing.book.save()
+    borrowing.quantity -=1
+    if borrowing.quantity<1:
+        borrowing.delete()
+        messages.warning(request, 'Book returned and borrowing history deleted because quantity became zero.')
+    else:
+        borrowing.save()
+        messages.success(request, 'Book returned successfully.')
+        
+    return redirect('borrowing_history')
