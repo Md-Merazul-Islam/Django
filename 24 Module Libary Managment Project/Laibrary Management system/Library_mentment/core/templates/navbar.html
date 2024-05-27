@@ -1,8 +1,12 @@
 {% load static %}
 <nav class="" style=" background-color: #0a192f;">
   <div class="mx-auto px-2 sm:px-6 lg:px-8" >
+
+
+
+
     <div class="mx-auto px-2 sm:px-6 lg:px-8 flex h-16 items-center" style="max-width: 1746px;">
-      <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+      <div class="absolute  left-0 flex items-center sm:hidden">
         <!-- Mobile menu button-->
         <button type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false" onclick="toggleMobileMenu()">
           <span class="sr-only">Open main menu</span>
@@ -17,7 +21,7 @@
         </button>
       </div>
       <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-        <div class="flex flex-shrink-0 items-center">
+        <div class="flex flex-shrink-0 items-center sm:items-start">
             <a href="{% url 'home' %}">
                 <img class="h-10 w-auto" src="{% static 'logo.png' %}" alt="Your Company">
             </a>
@@ -31,7 +35,7 @@
           </div>
         </div>
       </div>
-      <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+      <div class="absolute  right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
         <button type="button" class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" aria-expanded="false" onclick="toggleMenu()">
           <span class="sr-only">View notifications</span>
           <div class="flex items-center">
