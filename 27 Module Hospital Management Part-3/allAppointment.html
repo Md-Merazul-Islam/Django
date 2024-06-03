@@ -35,7 +35,7 @@
                         <ul class="dropdown-menu">
                           <li><a class="dropdown-item" href="userDetails.html">Profile</a></li>
                           <li><a class="dropdown-item" href="allAppointment.html">All Appointment</a></li>
-                          <li><a class="dropdown-item" href="#">Logout</a></li>
+                          <li onclick="handleLogout()"><a class="dropdown-item" href="#">Logout</a></li>
                         </ul>
                       </div>
                 </div>
@@ -49,32 +49,24 @@
    
     <main class="pt-5 m-auto" style="height: 100vh;max-width: 1280px;">
         
-        <div class="all-appointment-link">
+        <div class="all-appointment-container">
             <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Action</th>
-                    <th scope="col">Fees</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>gamil.com</td>
-                    <td>online</td>
-                    <td>pending</td>
-                    <td>x</td>
-                    <td>12121</td>
-                    
-                  </tr>
-                
-                </tbody>
-              </table>
-        </div>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>symptom</th>
+                  <th>type</th>
+                  <th>status</th>
+                  <th>doctor</th>
+                  <th>fees</th>
+                  <th>action</th>
+                </tr>
+              </thead>
+              <tbody id="table-body">
+               
+              </tbody>
+            </table>
+          </div>
 
     </main>
 

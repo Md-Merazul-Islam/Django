@@ -85,7 +85,7 @@ Patient register:            https://testing-8az5.onrender.com/patient/register/
 "password": "asdfasdf",
 "confirm_password": "asdfasdf"
 }
-Patient login: https://testing-Bazs.onrender.com/patient/login/
+Patient login: https://testing-8az5.onrender.com/patient/login/
 {
 "username"; "asdfasdfasdf",
 }

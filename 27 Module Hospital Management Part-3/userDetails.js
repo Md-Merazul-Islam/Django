@@ -4,7 +4,7 @@ const loadUserDetails = () => {
     .then((res) => res.json())
     .then((data) => {
         const parent = document.getElementById('user-details-container');
-        const div = document.createElement('div'); // Use 'div' instead of 'user-all'
+        const div = document.createElement('div'); 
         div.classList.add('user-all');
         
         div.innerHTML = `
@@ -15,7 +15,7 @@ const loadUserDetails = () => {
                 </div>
                 <div class="col-lg-6 px-xl-10">
                     <div class="bg-primary d-lg-inline-block py-1-9 px-1-9 px-sm-6 mb-1-9 rounded">
-                        <h3 class="h2 text-white mb-0">${data.first_name + data.last_name}ass</h3>
+                        <h3 class="h2 text-white mb-0">${data.first_name + data.last_name}</h3>
                         <span class="text-primary">${data.username}</span>
                     </div>
                     <ul class="list-unstyled mb-1-9">
