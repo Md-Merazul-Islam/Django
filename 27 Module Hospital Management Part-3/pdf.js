@@ -42,8 +42,7 @@ const handlePdf = () => {
   
   const donwloadPdf = () => {
     const element = document.getElementById("pdf-container");
-  
-    // Define the options for html2pdf
+
     const options = {
       margin: 10,
       filename: "appt.pdf",
@@ -51,8 +50,7 @@ const handlePdf = () => {
       html2canvas: { scale: 2 },
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
     };
-  
-    // Use html2pdf to generate and download the PDF
+
       html2pdf(element, options);
       
   };

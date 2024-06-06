@@ -1,12 +1,9 @@
 const loadServices = () => {
     fetch('https://testing-8az5.onrender.com/services/')
         .then(res => res.json())
-        .then((data) => displayService(data)) // Call displayService with the fetched data
+        .then((data) => displayService(data)) 
         .catch((err) => console.log(err));
 };
-
-
-// loadServices();
 
 const displayService = (services) => {
     services.forEach((service) => {
